@@ -1,0 +1,48 @@
+{
+  "corrections": [
+    {
+      "page_index": 12,
+      "operation": "replace",
+      "original_text": "qual'è",
+      "replacement_text": "qual è",
+      "context_before": "Vediamo ora ",
+      "context_after": " la soluzione corretta.",
+      "reason": "Qual è una forma tronca e si scrive senza apostrofo.",
+      "category": "orthography",
+      "insert_anchor": null
+    },
+    {
+      "page_index": 12,
+      "operation": "delete",
+      "original_text": "molto ",
+      "replacement_text": null,
+      "context_before": "L'esempio è molto ",
+      "context_after": "chiaro.",
+      "reason": "Eliminare la ripetizione involontaria di molto.",
+      "category": "clarity",
+      "insert_anchor": null
+    },
+    {
+      "page_index": 13,
+      "operation": "insert",
+      "original_text": null,
+      "replacement_text": "è ",
+      "context_before": "La relazione ",
+      "context_after": "chiara.",
+      "reason": "Manca il verbo tra il soggetto e l'aggettivo.",
+      "category": "grammar",
+      "insert_anchor": {"text": "chiara", "side": "before"}
+    },
+    {
+      "page_index": 13,
+      "operation": "comment",
+      "original_text": null,
+      "replacement_text": null,
+      "context_before": null,
+      "context_after": null,
+      "reason": "Verificare fonte e anno del dato in didascalia prima della pubblicazione.",
+      "category": "verification_needed",
+      "insert_anchor": null
+    }
+  ]
+}

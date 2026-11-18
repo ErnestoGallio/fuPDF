@@ -1,0 +1,31 @@
+.runtime/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+/.m0-artifacts/
+/build/
+/dist/
+
+# Local test inputs, generated PDFs, review results and scratch files.
+/artifacts/
+/output/
+/tmp/
+*.tmp
+*.bak
+
+# Local application/build diagnostics.
+logs/
+*.log
+
+# Local credentials and signing material.
+.env
+.env.*
+!.env.example
+/.secrets/
+/packaging/windows/signing/local/
+*.pem
+*.key
+*.pfx
+*.p12

@@ -1,0 +1,22 @@
+# fuPDF M20.2 — Localizzazione deterministica
+
+Dalla radice del repository:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.m20.localize 'C:\percorso\originale.pdf' 'C:\percorso\corrections.json'
+```
+
+La CLI legge gli input in sola lettura e restituisce il percorso della nuova directory `output/m20/localization-*`, esclusa da Git. `localization.json` contiene gli SHA-256 degli input, i totali e un risultato per proposta nello stesso ordine del JSON originale. `localization_report.md` riepiloga gli esiti e le diagnostiche. Le pagine e gli indici delle proposte partono da zero. Le coordinate sono punti PDF nel sistema PyMuPDF non ruotato e locale al CropBox. I quad sono ordinati per riga testuale con vertici in ordine superiore sinistro, superiore destro, inferiore sinistro e inferiore destro. Per un inserimento, `point` ed `edge_top` sono le estremità inferiori e superiori del bordo del carattere corrispondente a `before` o `after`.
+
+## Regole di localizzazione
+
+- PyMuPDF estrae i caratteri e la loro geometria per le sole pagine riferite. I caratteri di span contigui conservano l'ordine nativo. Il localizzatore considera la continuità tra righe soltanto nello stesso blocco, con una direzione concorde, estensione sovrapposta e distanza compatibile con l'interlinea. I caratteri senza geometria verificabile interrompono il testo, salvo spazi e combinazioni Unicode a larghezza zero associabili al carattere precedente.
+- Il confronto cerca prima la stringa esatta. In assenza di corrispondenze, confronta gli spazi equivalenti, i ritorni a capo, NFC, alcune legature tipografiche e gli apostrofi. Una vista aggiuntiva considera sillabazioni alfabetiche a fine riga per sequenze in font non monospaziato. La mappa conserva gli intervalli estratti, compresi eventuali trattini. Il confronto è sensibile a maiuscole e accenti ed esclude sottostringhe interne a una parola.
+- Se la fase di matching trova più candidati, ciascun contesto disponibile deve coincidere con il testo immediatamente adiacente nella stessa sequenza. Per `insert` l'adiacenza si misura dal bordo indicato. Un solo candidato deve soddisfare tutti i contesti forniti. `candidate_count` indica le occorrenze trovate nella fase usata, prima del filtro. `context_match_count` registra quante sono rimaste dopo il filtro, quando applicato.
+- Un commento univoco ha una posizione sul bordo del primo segmento testuale. Per un commento con pagina valida e bersaglio assente, incerto o ambiguo, il localizzatore propone una posizione nella fascia superiore visibile. Usa le aree occupate da testo, immagini e disegni per preferire un margine libero. Distribuisce i commenti con fallback in ordine di proposta e trasforma ogni punto in coordinate canoniche.
+
+## Interpretazione dei risultati
+
+`text_exact` e `text_normalized` indicano un bersaglio testuale univoco con geometria verificata. `page_fallback` è applicabile ai commenti di pagina. `ambiguous` e `unresolved` bloccano le operazioni puntuali. L'applicabilità riguarda il bersaglio e lascia la valutazione della correzione al revisore. Un diagramma o una tabella con testo PDF nativo può essere localizzato. Testo rasterizzato o convertito in tracciati richiede un riferimento diverso. Un mancato match su una pagina mista non identifica da solo quale elemento sia grafico. Gli inserimenti in testo verticale o bidirezionale restano irrisolti quando la direzione del bordo è incerta. Il margine libero per un commento è stimato dalle geometrie degli oggetti, con una posizione convenzionale anche su una pagina interamente occupata.
+
+I campi `matched_text` e `source_range` permettono una verifica sui caratteri estratti, con estremi `start` incluso ed `end_exclusive` escluso nella sequenza `run_index` della pagina. Sono riferimenti di questa estrazione. La conversione futura dovrà riconfermare testo, geometria, documento e generazione nel worker proprietario e usare i comandi e il servizio di annotazione fuPDF. Per codice e punteggiatura, il payload resta esattamente quello di M20.1, compresi spazi e ritorni a capo. Per migliorare la disambiguazione si possono chiedere in M20.1 contesti più distintivi e letterali su entrambi i lati delle ancore ripetute, riferiti al punto di inserimento effettivo. Un'indicazione testuale distinta del box o del diagramma potrebbe aiutare a rivedere manualmente alcuni fallback. Il contratto M20.1 è stato sufficiente per il primo campione.

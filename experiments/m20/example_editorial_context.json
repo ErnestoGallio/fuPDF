@@ -1,0 +1,7 @@
+{
+  "opera": "Manuale scolastico di informatica per la scuola secondaria di secondo grado. L'estratto appartiene a un'unità dedicata alla scomposizione dei problemi e alla programmazione modulare in C++.",
+
+  "destinatari": "Studenti in un percorso introduttivo di programmazione, che conoscono già variabili, condizioni e sintassi fondamentale del C++.",
+
+  "indicazioni_aggiuntive": "L'obiettivo didattico è comprendere come scomporre un problema e organizzare un programma attraverso procedure e funzioni. Gli esempi relativi ad altre discipline hanno funzione strumentale: non richiedono approfondimenti specialistici estranei all'obiettivo informatico. Privilegiare la correttezza dei programmi, dei procedimenti e dei concetti effettivamente insegnati. Segnalare gli errori sostanziali, evitando precisazioni teoriche e casistiche marginali che non migliorano la comprensione."
+}

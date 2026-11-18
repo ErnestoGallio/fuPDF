@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "personal-pdf-annotator"
+version = "0.18.0"
+description = "fuPDF: local desktop PDF annotation and editorial review"
+requires-python = ">=3.11,<3.12"
+license = "AGPL-3.0-only"
+license-files = [
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "LICENSES/*.txt",
+    "src/pdf_annotator/assets/fonts/COURIER_PRIME_OFL.txt",
+    "src/pdf_annotator/assets/fonts/SOURCE_SANS_3_LICENSE.md",
+]
+dependencies = ["PySide6==6.11.2", "PyMuPDF==1.28.2"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+pdf-annotator = "pdf_annotator.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+pdf_annotator = ["assets/fonts/*.ttf", "assets/fonts/*.md", "assets/fonts/*.txt",
+                 "assets/branding/*.png", "assets/branding/*.ico", "services/review_contract/*.txt"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+pythonpath = ["src"]
