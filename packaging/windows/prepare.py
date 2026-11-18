@@ -2,12 +2,12 @@
 
 from pathlib import Path
 from importlib.metadata import version as installed_version
-import platform
 import struct
 import sys
+import sysconfig
 import tomllib
 
-from PySide6.QtCore import QBuffer, QByteArray, QIODevice, Qt
+from PySide6.QtCore import QBuffer, QByteArray, QIODevice, QRect, Qt
 from PySide6.QtGui import QImage, QPainter
 
 
@@ -16,8 +16,10 @@ SIZES = (16, 24, 32, 48, 64, 128, 256)
 
 
 def check_environment(root: Path = ROOT) -> None:
-    if sys.version_info[:2] != (3, 11) or platform.machine().lower() not in ("amd64", "x86_64"):
-        raise RuntimeError("Packaging requires Python 3.11 x86-64")
+    if (sys.version_info[:3] != (3, 14, 10)
+            or sysconfig.get_platform() != "win-amd64"
+            or sysconfig.get_config_var("Py_GIL_DISABLED")):
+        raise RuntimeError("Packaging requires standard CPython 3.14.10 for Windows x64")
     project = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))
     requirements = (root / "packaging/windows/requirements-build.txt").read_text().splitlines()
     for requirement in requirements + project["project"]["dependencies"]:
@@ -29,13 +31,38 @@ def check_environment(root: Path = ROOT) -> None:
             raise RuntimeError(f"Build requires {name}=={expected}; installed {actual}")
 
 
+def crop_icon_content(image: QImage) -> QImage:
+    image = image.convertToFormat(QImage.Format.Format_RGBA8888)
+    pixels = image.constBits()
+    width, height = image.width(), image.height()
+    left, top, right, bottom = width, height, -1, -1
+    for y in range(height):
+        start = y * image.bytesPerLine()
+        alpha = pixels[start + 3:start + width * 4:4].tobytes()
+        visible = alpha.lstrip(b"\x00\x01")
+        if visible:
+            left = min(left, width - len(visible))
+            right = max(right, len(alpha.rstrip(b"\x00\x01")) - 1)
+            top = min(top, y)
+            bottom = y
+    if right < 0:
+        raise ValueError("Branding image has no visible content")
+    # Alpha 1/255 can be stray noise. Keep a fringe around the visible edge
+    # so nearby faint antialiasing is preserved in the resampling.
+    bounds = QRect(left, top, right - left + 1, bottom - top + 1)
+    return image.copy(bounds.adjusted(-2, -2, 2, 2).intersected(image.rect()))
+
+
 def icon_bytes(source: Path) -> bytes:
     image = QImage(str(source))
     if image.isNull():
         raise ValueError(f"Cannot decode branding image: {source.name}")
+    content = crop_icon_content(image)
     frames = []
     for size in SIZES:
-        scaled = image.scaled(size, size, Qt.AspectRatioMode.KeepAspectRatio,
+        margin = round(size / 16)
+        extent = size - 2 * margin
+        scaled = content.scaled(extent, extent, Qt.AspectRatioMode.KeepAspectRatio,
                               Qt.TransformationMode.SmoothTransformation)
         canvas = QImage(size, size, QImage.Format.Format_ARGB32)
         # Do not let QApplication / screen DPI change PNG pHYs metadata.

@@ -1,0 +1,1394 @@
+{
+  "binary": "_internal/pymupdf/mupdfcpp64.dll",
+  "binary_sha256": "998184dce298f24a4c2b080a9173594c96c6f78796732bdd8e95ca0e557557cb",
+  "basis": "Byte-for-byte embedded font blobs in the M22.6f candidate.",
+  "matches": [
+    {
+      "file": "droid/DroidSansFallback.ttf",
+      "sha256": "ee38813ea00c3e32add4268fff7fff9e39417b4913cb13be2415164a47807cc2",
+      "notice": "droid/NOTICE",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "noto/NotoEmoji-Regular.ttf",
+      "sha256": "415dc6290378574135b64c808dc640c1df7531973290c4970c51fdeb849cb0c5",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2013 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoMusic-Regular.otf",
+      "sha256": "1a14e6903bd0450b931b595c6095b3562278b16ec1ec3fd89314616a16623923",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoNaskhArabic-Regular.otf",
+      "sha256": "21d2fa0dc32187333d3a0861361cd8c6e8c0563c8d880ebee2cbd1b8f79a553c",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019-2021 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoNastaliqUrdu-Regular.otf",
+      "sha256": "bacb4026934825914218f19045bcc5d22109b50a1530920b9a1b541beb2e5d9f",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansAdlam-Regular.otf",
+      "sha256": "0f5bf1ceb7d6e5d424c12501ffdbfd853a372db256518625876a2b68778685f5",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017-2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansAnatolianHieroglyphs-Regular.otf",
+      "sha256": "7583c987366743598e831bf7c0686bb2d497f7e63d04145261cf507c1218b6b7",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansAvestan-Regular.otf",
+      "sha256": "66e716f632e8639a0a7ec77d1906555699c6b3fe038e9c0f98312bc10b9a6b87",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansBamum-Regular.otf",
+      "sha256": "fd7587f3907030a38bf4f6d23d7fb3f77acddf07aeca4db2227e80d0124da6b0",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansBassaVah-Regular.otf",
+      "sha256": "b3466386ad388425fc939fffc22fc32e71c27799614ca58bc8a020c0c6a09d44",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansBatak-Regular.otf",
+      "sha256": "8e11126dbef490532328e10375ddb7076100ac7b4e5727a0bd8359164ac32763",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansBhaiksuki-Regular.otf",
+      "sha256": "7b221b7bc9e8e037d48c8ce06eb412c7ef19e9b2d49a2fea8ac4456feb8a0297",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansBrahmi-Regular.otf",
+      "sha256": "b27cfe800d67a0e79f5b964b1f69d114b67c2959a47631f5a44d9bec8cd75794",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansBuginese-Regular.otf",
+      "sha256": "6f19e9c8b23817c8fef4f903f93920d624060faa0c7302c58b3b5b2332b143db",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansBuhid-Regular.otf",
+      "sha256": "747fba8ffdd86c6046b15189c2fe1f5c80436151db86e880eeb7bac4cc1a94f8",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansCanadianAboriginal-Regular.otf",
+      "sha256": "d189eca71297b05993561259d15c930466b69b279e516fc84e7f9b9971ff057e",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansCarian-Regular.otf",
+      "sha256": "db34290e4200c8bbaaa8673998ef1f44f53ba1b085fced61d29493d5c3447bcc",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansCaucasianAlbanian-Regular.otf",
+      "sha256": "eb947b8d3fbcd536a25d8da62af16bfe6a42f455233ae8070522c6df322385a9",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansChakma-Regular.otf",
+      "sha256": "b74744f61dc960928429e07b7d96c2b7e2b291e9236413d35d096b0d472f1fae",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansCham-Regular.otf",
+      "sha256": "810981f9c8035d80526492853ed081153557801f1ce14d544e3a7fccecfb3656",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansCherokee-Regular.otf",
+      "sha256": "7e64eead447bc11853a6f3d2d40e3de059214bb9f5819fbac7669f7a1e8d61cb",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2016 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansChorasmian-Regular.otf",
+      "sha256": "8678a99fc5710e82c4a291481a00b59c87866caad2e9372d14fa821789885b0d",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/chorasmian)"
+      ]
+    },
+    {
+      "file": "noto/NotoSansCoptic-Regular.otf",
+      "sha256": "973317c3aa921c6578ee0e7132a5f16f7ce1de2b46cfe11c52c26dddea170d74",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansCuneiform-Regular.otf",
+      "sha256": "4129d04b1e8a75939e3019a5b9d8a6556c24c67dba22b8fa06748997be2ba474",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansCypriot-Regular.otf",
+      "sha256": "d9c11715af61f7a5af028fcea94b4e57fcb0fd62794a8272f39b6953a1d3c85b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansCyproMinoan-Regular.otf",
+      "sha256": "afa98f1f50200c428de82c48c833d080605f6617a894560348fc4d152958907c",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/cypro-minoan)"
+      ]
+    },
+    {
+      "file": "noto/NotoSansDeseret-Regular.otf",
+      "sha256": "d64ce95c79129cc7f500a582f19515cb5771e5d6cbd55a15603809030d3cce4f",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansDuployan-Regular.otf",
+      "sha256": "2abc79fff4e017ed3a8f1f36fb614f9655c8b61176ae93fc98001c9c2dbda581",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansEgyptianHieroglyphs-Regular.otf",
+      "sha256": "4dc05803928e62496893d53558963c7ac0893a45409f6e7e36af5ee30ca30585",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansElbasan-Regular.otf",
+      "sha256": "ea59df5317a31180f0b0434a786b26def85e7164cdf2d72c609e38cf04750ee8",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansElymaic-Regular.otf",
+      "sha256": "3f107ee51b1bc3d5194703218f6159575ddbad3dacf4b530201760012d77b02a",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansGlagolitic-Regular.otf",
+      "sha256": "568e06c44760c6162183610c2c5a70ae77258f36232f7e0e2d566e89e3c7b8ab",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansGothic-Regular.otf",
+      "sha256": "15c432e39959ae0acc65184c4f8e0c73d4d24bbc7eaf54dcc8400f3ae14c9260",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansGunjalaGondi-Regular.otf",
+      "sha256": "674a4d21a238e0771d875e9ea17b175701ec0ea837a5edb17c7b275beabff8a6",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansHanifiRohingya-Regular.otf",
+      "sha256": "5bee5c2d2e84ef1fddad59ade0eda33969c5b7b4bfc5740f15157b71db13d62a",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansHanunoo-Regular.otf",
+      "sha256": "a99a3e221129521b34a885da0c8da50dfb5ed0557e309a3eaa4705a9832f8d92",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansHatran-Regular.otf",
+      "sha256": "fee8dc1f3340a63ab31aa458aef51d2752d135fd3bf841adc1673d8fe8b32f96",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansImperialAramaic-Regular.otf",
+      "sha256": "447c2b200b46b075d815d35093a4cfbe2533f9c34733a0f301cfd908cb9c8fb5",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansInscriptionalPahlavi-Regular.otf",
+      "sha256": "5185cf81f32113521d9b6ca775e90183cdfb1fd3de540f6c9e56a8aad694449b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansInscriptionalParthian-Regular.otf",
+      "sha256": "b772b0b78515aa9ede77a8529d31cc38b9fb4edd54c4416c357d04e253f3aa00",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansJavanese-Regular.otf",
+      "sha256": "bb9d390512a1f645a9002f9d661897e08cdc83da36818fe00b80d4558f457f2c",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansKaithi-Regular.otf",
+      "sha256": "df56a568e48a200355ca4cf30aaf7020e5175b695610f4b52c4fc7a9c1af52a3",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansKawi-Regular.otf",
+      "sha256": "813b96aabf37293b4c6acb02b21a5dfe9923fb6776ffb433699ce9a8a23afe18",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2023 The Noto Project Authors (https://github.com/notofonts/kawi)"
+      ]
+    },
+    {
+      "file": "noto/NotoSansKayahLi-Regular.otf",
+      "sha256": "44ef72737c49862ab49ab295aa256acf0fba20ced1ecfb8e9b35f5dea32b4823",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017-2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansKharoshthi-Regular.otf",
+      "sha256": "4bec640a79f4792dd5dc9d3109375d079bb493ddf7ab29c064b68df232bf3b48",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansKhudawadi-Regular.otf",
+      "sha256": "9153a995029f3068c676b4353ad8cf5ab04e6138e51d2c080af35645c215a364",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansLepcha-Regular.otf",
+      "sha256": "0a585a8e72403cd2e5b2cd60c4738748d1d3085e3352bdc3426399bc766e96b9",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansLimbu-Regular.otf",
+      "sha256": "028c7e2dfcba3e1b1aa01a6699c6f43fc75c3d0e85eff4dc6c452bb827d646f0",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansLinearA-Regular.otf",
+      "sha256": "23a857347c83a9965739d6605a114b5ef5c174bc138ccb4a7f73afe3e866e6ea",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansLinearB-Regular.otf",
+      "sha256": "765cac7010225356fc9f208e1ed2a2e5d49a85efdc72bbbc81faab6479053227",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansLisu-Regular.otf",
+      "sha256": "c2e608896050e0f399d5c1007f6b1c0531d99dd14080aec8597efd58933282fa",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google Inc. All Rights Reserved. NotoSansLisu."
+      ]
+    },
+    {
+      "file": "noto/NotoSansLycian-Regular.otf",
+      "sha256": "addbf1c6a1cf45eb3ff769abeea389bfeeb6b6d96d39ee7d45226161d64c598f",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansLydian-Regular.otf",
+      "sha256": "cf371f831035aa045859574313e14d492b3561530e3be35daa2b9c8799e7b8dc",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMahajani-Regular.otf",
+      "sha256": "64b556b72194c83ba6f59918507fa3cc3f39c96bc8fd772866549af94b5b5545",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMandaic-Regular.otf",
+      "sha256": "9966b0a6626e49774461075a751378c8931c2af06b596aab53f56b5acd072938",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansManichaean-Regular.otf",
+      "sha256": "b1f0b2a2287ff6946eb71b6780b29dc888e08e49b6e2cf89c084ab8d8011662d",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMarchen-Regular.otf",
+      "sha256": "1e238bac07faf5dfca65dffc7fd2de9dfacc19eba32620f63ed6203a2265d343",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMasaramGondi-Regular.otf",
+      "sha256": "5921efc7058c59ac82178c8514739d777e172fa21316e3b45a5a1ceb6d3fd8df",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMath-Regular.otf",
+      "sha256": "ca61efa77e6bca4d4e90cd277cbb1364e55f5b58289ec28d2a6e5ec43e1e285b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMedefaidrin-Regular.otf",
+      "sha256": "0d172cc5ec04b73c4f1fefe6d552748b3a218ce84062b22064fc913e601367cc",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMeeteiMayek-Regular.otf",
+      "sha256": "974eb2a8cf62869452997eac6f6c61317028774b63bf9c2f04c555598e3fb27b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMendeKikakui-Regular.otf",
+      "sha256": "bda453ff1c889f389a17678192ec94a1ea1ee5402438dd1cf15b03819a39394f",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMeroitic-Regular.otf",
+      "sha256": "ef4b8492bd4ab606b4cef2a540df43a10c5d5a2f087a07e488cfa1136ac6a4ea",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMiao-Regular.otf",
+      "sha256": "0d36c613d63e2606857d8f48c44fce9799b86703bcafa4d008c548448edc0898",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansModi-Regular.otf",
+      "sha256": "33d3056a18f9fba3b5db32c8a19e7469252cd9b5443be5312b7781e729b64799",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMongolian-Regular.otf",
+      "sha256": "09e5840136bce966a9ccbeefd1017313052215189ff962894603a9bfa9d31614",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMro-Regular.otf",
+      "sha256": "2d3f6b005910f11e2b5d1148f6059b3cc228e8f942e9621e373a6ba654478ad2",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansMultani-Regular.otf",
+      "sha256": "c4690f920ab2b211eab9bebb952df2e53f961cfe3f899f5a28eb55f17c34ca2a",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansNKo-Regular.otf",
+      "sha256": "4f47c46f83f82ed1c2d41175fe431d78d3e38a22ff14ed61913d4d477e281237",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansNabataean-Regular.otf",
+      "sha256": "42514722140413ed9bbe6db61bb0b1759707b14785d90bb6c88422bc71c4ab78",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansNagMundari-Regular.otf",
+      "sha256": "cfab4814636907e8767aedfe5f516c0d14a0e4367e878ae15dfe3e69e2739c41",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2023 The Noto Project Authors (https://github.com/notofonts/nag-mundari)"
+      ]
+    },
+    {
+      "file": "noto/NotoSansNandinagari-Regular.otf",
+      "sha256": "584441a694715e020c83ab253de976f2a83efa9e99613f05976e54abb2707b06",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/nandinagari)"
+      ]
+    },
+    {
+      "file": "noto/NotoSansNewTaiLue-Regular.otf",
+      "sha256": "9c023f39e00d27628635a8711a3691a08eb3464b9e23b49f0a75e0970045971f",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansNewa-Regular.otf",
+      "sha256": "f7b8735c1d5b8ccd1737012dbe7092ba912d430dee14147d8641ef0d77af0c86",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansNushu-Regular.otf",
+      "sha256": "cb78105dba4ef36ff4d19b42a487740c0c0b4a9f96ddc917c35b3572bb6d2007",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOgham-Regular.otf",
+      "sha256": "cf71af49a2cbacee4b08d25886b3c80b59598052cbf2036929f4393b34cfdc81",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOlChiki-Regular.otf",
+      "sha256": "5364e25959452bd6422b136c7f04215e5a8f83267614598bf9010ff8e21ce16a",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOldHungarian-Regular.otf",
+      "sha256": "5754a9cd51e3082ba8ac15aa99e09ce87750c71245b3eb296230947d85456dfa",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018-2020 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOldItalic-Regular.otf",
+      "sha256": "1b6c3b918a89a32ae932a38bdc1652d883db2699d3f37fccb7b0c2d81f404456",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOldNorthArabian-Regular.otf",
+      "sha256": "9c06ca0386b8d309b4b52fa68d19cdd528c4b0b80837acd8a32278d72c40ec90",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOldPermic-Regular.otf",
+      "sha256": "54c7447e2affb30bc380f057b865792d5cc94e4e7760262ec1c6ec6825504934",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOldPersian-Regular.otf",
+      "sha256": "b4a6ec64c4be6f8e99d308380fe7881530013f55bcb2ebf429b8d2bd0e22e68f",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOldSogdian-Regular.otf",
+      "sha256": "5bdf78b0aeaf47fba2552d6a4e635f4cd6e374cfe777e94187e6e936c78a965b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOldSouthArabian-Regular.otf",
+      "sha256": "76502ce5254e3e01661bd88e37639995b07de8b812de555adc99e0f684a95ea9",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOldTurkic-Regular.otf",
+      "sha256": "6194e7abf3a91762ba129b45b324c0347b72a684a3b7c6c3adddf13f89e1c93c",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOsage-Regular.otf",
+      "sha256": "f641f269013752ca8ad02a32c80b12a7bca55e6443b01d6b591dbcddd3fb1745",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansOsmanya-Regular.otf",
+      "sha256": "d9546eced95046f4b06cc0092eef131a1317ef1332e562ab2326e4ae87552d3a",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansPahawhHmong-Regular.otf",
+      "sha256": "66ba8148ac69be5c52d507eca397b67652d2b6f42732366f05849c3de2c5ce34",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansPalmyrene-Regular.otf",
+      "sha256": "60f27f30851560ab2ba587331cf1ac76cb79c73c01483b79d3fc777baf0ba90d",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansPauCinHau-Regular.otf",
+      "sha256": "183bf30cebe529bc94a2991d93b3358f7be1e5e7acf7b392617a3e90aec0ba75",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansPhagsPa-Regular.otf",
+      "sha256": "6e9998c574495033fc1268772f31e552519ca4f7b982910dc2c70aa6104308ff",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansPhoenician-Regular.otf",
+      "sha256": "aa3798ac48d3e7c17a27f00593f15d3b128ff72e6d4f7e5893d5430a89f48993",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansPsalterPahlavi-Regular.otf",
+      "sha256": "03d0277e255a5b77b2fb26d59a407efdbc88bd42b487dce529a1740b2c630f1c",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansRejang-Regular.otf",
+      "sha256": "ddab37ccb200c45bb7ab447d40a149bc2a683bcda4b4256a9d532a7b5c77ce43",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansRunic-Regular.otf",
+      "sha256": "35222a93c0282acac0e97681f3a08036337aff431cc519f67b93bab26144c2b7",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSamaritan-Regular.otf",
+      "sha256": "a60ed544a06cc2d36ba5e90f4c1c1626495407cdfb59a7742aec78ad914a84a8",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSaurashtra-Regular.otf",
+      "sha256": "faf909ca7a39cf4da70861f63c3101e6bad9a4a86818c7f81b36c81d39e4dc9e",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSharada-Regular.otf",
+      "sha256": "c74e53621d9791e3c45ed0daada585ac6a79dd115aba737f97c400ab7cba8c59",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansShavian-Regular.otf",
+      "sha256": "1acd529933e608307c451fc5d2bd5d4f0f37cbb9953d602ec98dc93c8e4bd5db",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSiddham-Regular.otf",
+      "sha256": "b07d0771f083d6998a6285dd3bcc077f5353224efac193260f2f0b69ca27d051",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSogdian-Regular.otf",
+      "sha256": "93c653f907e61895a4f705c2d7d9e31400e17e52c945a6c76038b9820126557e",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSoraSompeng-Regular.otf",
+      "sha256": "7465fce1be341e2f94724ce600fceca9eb9db048ea1dbf24678a9e566515d430",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSoyombo-Regular.otf",
+      "sha256": "71c0fb3db944b3e3029edd37a0442c703a0b8691eaff53aae1c6aa1221c4fd90",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSundanese-Regular.otf",
+      "sha256": "8c00ddd2c16a2cb92fa2671c19e1e6b3207eb74de387d3e70470173c552eb426",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSunuwar-Regular.otf",
+      "sha256": "2edabf2008a70d925a843e19dca492f246dd3769da2e75b97e3a6837d871e75d",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2021 The Noto Sunuwar Project Authors (https://github.com/ScriptEncodingInitiative/sunuwar)"
+      ]
+    },
+    {
+      "file": "noto/NotoSansSylotiNagri-Regular.otf",
+      "sha256": "2afbf6105ac98ac8c0a982f0594d30685cc49679534cd34af097f157a513c787",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSymbols-Regular.otf",
+      "sha256": "c7591ff5fac35caa7845566d7376b7f7092eb228bc70e11f267129d35e2a0ad3",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2016 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSymbols2-Regular.otf",
+      "sha256": "76b6a7b09dae28704c061710e1fcd42d28e3be8a397298414630a07063ae89c6",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansSyriac-Regular.otf",
+      "sha256": "966ed49821db7ffeafe9217faa982047616020c12faabe7e5011b631eab64dda",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansTagalog-Regular.otf",
+      "sha256": "d0b88795386e2536f2bae7e7fa22987f36be4d6e1430632d21634764f6c6463a",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansTagbanwa-Regular.otf",
+      "sha256": "0cc05ba2299924d835c69d039584f1d43cffc7aad575a33d0a9d24d4ea3a7570",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansTaiLe-Regular.otf",
+      "sha256": "06cb3d3000e26d51fb69e75d7b32c650fdc678a497138e3ee49e427db8a99892",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansTaiTham-Regular.otf",
+      "sha256": "547fc493df9657a54c6271d73ef8c9ce34c16a2a9d324b572d5e1c694426a9f5",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansTaiViet-Regular.otf",
+      "sha256": "293a2691224ff5e2659b3b461319cfcc3ad8e22bc4142114031eef483b970ee7",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansTakri-Regular.otf",
+      "sha256": "a3eb3568b3ccac4a9801d8b3b2492a12843d46cf89c13cd650199c1f81dd11af",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansTangsa-Regular.otf",
+      "sha256": "c375d384f44c1ce9cfa28344bc0cdee33e6b5e76086eacee4922035e2f7ff3e5",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/tangsa)"
+      ]
+    },
+    {
+      "file": "noto/NotoSansThaana-Regular.otf",
+      "sha256": "afcfe2138a30950b0e159a74c8eaa937f659a9872655f9b49dc839805451c530",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansTifinagh-Regular.otf",
+      "sha256": "2da38045e716ab42d8212a4dd69e51fc3dfb48cb0a2cd91a4b79562b3e338920",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansTirhuta-Regular.otf",
+      "sha256": "82893940275f32d4951fcea3eff695e3e81526795d493efd3fe310b2d3f1e64b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansUgaritic-Regular.otf",
+      "sha256": "eb2f4683a4df6c755f72958a72687072afd438f93c6cf0a1f562571d4058527f",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansVai-Regular.otf",
+      "sha256": "507d9884b3875a49597f2aad62a7b40ad2ead16de202540ca3bc8f886c8b0765",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansWancho-Regular.otf",
+      "sha256": "3ebac56877551449802cbedb705af9004ba000be763f989458fce4261151d807",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansWarangCiti-Regular.otf",
+      "sha256": "a1d09008417d15ce5532d5cae97e0a5ba4eaa9b911f93a4911aa50be742e53e9",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansYi-Regular.otf",
+      "sha256": "247d73756c23d76f529fd3b5eb5a0ec9e0ed9c6394181576d669ae8fbb1c3f37",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSansZanabazarSquare-Regular.otf",
+      "sha256": "71d29d1423c9f1c7d8584c06d58af5b8577728409b86bfe3501132b6124971ef",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerif-Regular.otf",
+      "sha256": "7a5f859ff1b3143ce6796e445740c7b99b699694d202c66177308468b1d2b837",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2015 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifAhom-Regular.otf",
+      "sha256": "7ff73087f6cb5e771b0a7cde00968f32a701bdff627bd9819fb17cb2157e0de3",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifArmenian-Regular.otf",
+      "sha256": "ac23d9d12ff87be25d306a3fe47e0677d78f73007ed659c30edc18fb361a7f2b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2015-2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifBalinese-Regular.otf",
+      "sha256": "3157c3590a0a5be7d7f8789fb1a200a71b8a013663d2d3310392bc4a47662575",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifBengali-Regular.otf",
+      "sha256": "b9837b18eb4bc30d856de89c660a489bcd0435fcbf49dc19f5aacd736d00a1b3",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifDevanagari-Regular.otf",
+      "sha256": "84ee3ebb79182043f12d14e7bb8612301a10694b9e9b4a6294e2728221360da1",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifDivesAkuru-Regular.otf",
+      "sha256": "cf8da8e8e68e4d5312774437aa115fe36ebd74693d5390499b88857a56ec8ea4",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/dives-akuru)"
+      ]
+    },
+    {
+      "file": "noto/NotoSerifDogra-Regular.otf",
+      "sha256": "ed34fef301f2f3c05389cbe65fe6356e1a388b2fa349fb64cb1b7163ccbfda0c",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifEthiopic-Regular.otf",
+      "sha256": "34ff413e971b44d3af7c7f6660b5d8aec3f86b2787e821a5fc03ab26b8d9182b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifGeorgian-Regular.otf",
+      "sha256": "a6204a495367f0be310a5c17b9461b56ab2885344eafc7497301d4831bad1e27",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifGrantha-Regular.otf",
+      "sha256": "778e90eff953693dc92bdc0adfbf83717a242295cb3e6dd7185ef728b1b122b0",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifGujarati-Regular.otf",
+      "sha256": "e8a624cddb9564d5d59caa58700fe23062a434faf2e977878522022d8b091236",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifGurmukhi-Regular.otf",
+      "sha256": "791df58342f47fd5ccbc603024f57f378e77753383125c27755266991f6aa202",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifHebrew-Regular.otf",
+      "sha256": "077b84bb939e097629621284e3362764dacc3e2365d68678cb747939fc047607",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2016 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifKannada-Regular.otf",
+      "sha256": "14d6d0d3f7d1129f5cd19642a36c8b74d7e82f8e209bcb275984505a27f011d8",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifKhitanSmallScript-Regular.otf",
+      "sha256": "d8fff35bd5f96bb49c493c0be80726c69724e385450869cb40a2c88290a27b2b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifKhmer-Regular.otf",
+      "sha256": "74076ecbfb3f618d05737707b5e6d88583b0a4288c01b85c33c672a666b5d73a",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2016 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifKhojki-Regular.otf",
+      "sha256": "ef7fddd6340a350263051167b8bad64d41897184031904dc8fb38356dce60ed9",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifLao-Regular.otf",
+      "sha256": "844fb038e125b2720ff41a025f517c2b7d687f0f48b960e5b1dea8dc8efd722d",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifMakasar-Regular.otf",
+      "sha256": "cdb0fc05327a2f21442752d52ba6ea66076b02d36fb5b2665d07160aef8ae60b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/makasar)"
+      ]
+    },
+    {
+      "file": "noto/NotoSerifMalayalam-Regular.otf",
+      "sha256": "5ad51e4a43790a2efe77e7a04fd1c9a386f6e4a71f6abc372f2aee15116c90a8",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifMyanmar-Regular.otf",
+      "sha256": "99412d36c941bbecbb88a987ae727d0b1b60cdffa17a0b7b0b0e43bd6be67c89",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2016 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifNyiakengPuachueHmong-Regular.otf",
+      "sha256": "5d789378f93a57ca810b8f5f5d3decdb812d35e51477a894d25d332a7711149b",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifOldUyghur-Regular.otf",
+      "sha256": "1f764255e2419400d162e175c7e6276a6c5950fd97573615215eb0d4077ba4bd",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/old-uyghur)"
+      ]
+    },
+    {
+      "file": "noto/NotoSerifOriya-Regular.otf",
+      "sha256": "adaf7279df6596b7f9c7245b44f2e6c026709fc50530940d6811eedd638a2f87",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/oriya)"
+      ]
+    },
+    {
+      "file": "noto/NotoSerifSinhala-Regular.otf",
+      "sha256": "7fcad9136eebf653c7e3d85a1a165a9e4cc06403732accc894217b549601e679",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2016 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifTamil-Regular.otf",
+      "sha256": "25929aaa15737345b5bed6cdddf17e7a7bf5308f56aa032d207cbc489c70e144",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2017 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifTelugu-Regular.otf",
+      "sha256": "870d16b1e321a0007adb53881488215810d48db123e23142a12864fe93216ea0",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2019 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifThai-Regular.otf",
+      "sha256": "76c235539d4fba40afc307bb7bb627d22b8a975676d6b3f2b3a393cf71f36e6e",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2016 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifTibetan-Regular.otf",
+      "sha256": "c9ed6f06f88267c55cf6a49a29b94305f2202ac4ed491f6ede76383dc657a991",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2018 Google LLC. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "noto/NotoSerifToto-Regular.otf",
+      "sha256": "e1f8ed24fa542b0194ce79a0d887ffce9dc3c53c5dee268c5f0beb56490ce427",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/toto)"
+      ]
+    },
+    {
+      "file": "noto/NotoSerifVithkuqi-Regular.otf",
+      "sha256": "49fa53e747b04d4ad17d63934951c0ee14fab89f638cfee3a5c8cb9050b0a1bb",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2022 The Noto Project Authors (https://github.com/notofonts/vithkuqi)"
+      ]
+    },
+    {
+      "file": "noto/NotoSerifYezidi-Regular.otf",
+      "sha256": "f8a3c04d1a0a872e2a522d07f1280369c30c680c40099eaf4471ee7c389ebde9",
+      "notice": "noto/COPYING",
+      "sfnt_copyright": [
+        "Copyright 2020 Google Inc. All Rights Reserved."
+      ]
+    },
+    {
+      "file": "sil/CharisSIL-Bold.cff",
+      "sha256": "70b000ec4ea425a7bdcdc941e18220bc3184729bb7f86e99c4c207a1ac129f4d",
+      "notice": "sil/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "sil/CharisSIL-BoldItalic.cff",
+      "sha256": "e1cc01e3e4fb136c857f62c61aaad55801bf7aea8764303f7dfb9ae314683535",
+      "notice": "sil/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "sil/CharisSIL-Italic.cff",
+      "sha256": "c1317a2e911d998784e631055a188dec2681528be92567c9932dfa14791b88c6",
+      "notice": "sil/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "sil/CharisSIL.cff",
+      "sha256": "bcf298b48a8e03ba0e368726bf78fa570d3b5db3c1b2aceed243b11561428b15",
+      "notice": "sil/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/Dingbats.cff",
+      "sha256": "5e833db6ebcd4df810075dc538e07e8d9b64a3168da29e93447e9f98852658bc",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusBoxes-Regular.cff",
+      "sha256": "3875cd52c469b56e4b7c7cbe783ef93295af6d084868207beb31c3768b6ce343",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusMonoPS-Bold.cff",
+      "sha256": "aba820052e08d413b94465af8f1401e942234b57ac091a9c0e0a1dc10bb3f091",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusMonoPS-BoldItalic.cff",
+      "sha256": "9edb0d4b29b122a9f9f8098815ca99e5d3a00b8a106e3c659d66c5ccadde2c9e",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusMonoPS-Italic.cff",
+      "sha256": "b8bce31c935e0888435387d6ec610700afcc06a778433004e56348d374a3bf3a",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusMonoPS-Regular.cff",
+      "sha256": "2e8380cc08f257fb0b301079323a442918ec9d69582c95607da5543b362aa6d6",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusRoman-Bold.cff",
+      "sha256": "219011281845fd509a0042c1b70bf98d49e0f562815a6b4a2549ef2ca14fa70a",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusRoman-BoldItalic.cff",
+      "sha256": "12b53139c10085e8fdc7d427ee00f49fa80ac7d0c578fd9ca9196c80e2cbf59f",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusRoman-Italic.cff",
+      "sha256": "9deed810d473df0bfe15f426b2e69e560bcb756b801a9cbcebdd5cd82519ffa6",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusRoman-Regular.cff",
+      "sha256": "eb609a306b81357853ba91c2a3c47f3bba04f3a8cfdeedc733b1aa4af5d03d4c",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusSans-Bold.cff",
+      "sha256": "d4ea80d1d0e29a1e950808009ca8f96fe07a0670b60b556f6b2cf0705337fa9f",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusSans-BoldItalic.cff",
+      "sha256": "9cdfc2d0947339dce76f99bdf9e2d9fe01e472a384cf683007e6a0bb35634623",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusSans-Italic.cff",
+      "sha256": "fa6acc6f51b5935a6b7defbc3ead480cd4906e3b198930470335db9a9bff6590",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/NimbusSans-Regular.cff",
+      "sha256": "366720e054067fa49d030f58005c739fc787dcc9727a9327a28767777791d706",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    },
+    {
+      "file": "urw/StandardSymbolsPS.cff",
+      "sha256": "cc495f1f0260c680947225beb8c7ddc426dbc66f0f035f1ca9da08f4266e3f9b",
+      "notice": "urw/OFL.txt",
+      "sfnt_copyright": []
+    }
+  ],
+  "not_matched_as_raw_bytes": [
+    "droid/DroidSansFallbackFull.ttf",
+    "han/SourceHanSerif-Regular.ttc",
+    "noto/NotoSans-Regular.otf",
+    "noto/NotoSansSignWriting-Regular.otf",
+    "noto/NotoSerifTangut-Regular.otf",
+    "sil/CharisSIL-5.000-developer/sources/CharisSIL-B-designsource.otf",
+    "sil/CharisSIL-5.000-developer/sources/CharisSIL-BI-designsource.otf",
+    "sil/CharisSIL-5.000-developer/sources/CharisSIL-I-designsource.otf",
+    "sil/CharisSIL-5.000-developer/sources/CharisSIL-R-designsource.otf"
+  ]
+}

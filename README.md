@@ -17,9 +17,10 @@ annotazioni native, mantenendo il testo originale del PDF.
 ## Windows e avvio portabile
 
 Il sistema di riferimento è **Windows 11 x64**. Il pacchetto portabile è stato
-provato anche su Windows 10 Pro 22H2 x64 (build 19045). Il pacchetto include
-Python e le librerie necessarie. La qualifica documenta le configurazioni
-provate e i limiti delle prove DPI. [Qualifica Windows](tests/manual/windows_release_qualification.md)
+provato anche su Windows 10 Pro 22H2 x64 (build 19045) nelle build storiche.
+Il pacchetto include Python. La variante per la prima distribuzione richiede
+il [Visual C++ Redistributable x64 v14 ufficiale più recente](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist).
+La qualifica documenta le configurazioni provate e i limiti delle prove DPI. [Qualifica Windows](tests/manual/windows_release_qualification.md)
 
 1. Estrai tutto l'archivio ZIP in una cartella locale.
 2. Mantieni insieme `fuPDF.exe` e l'intera cartella `_internal`, con tutti i file
@@ -55,11 +56,15 @@ sintetica. [Report Acrobat M10](M10_REPORT.md) · [Report M15](M15_REPORT.md) ·
 
 ## Avvio da sorgente
 
-Con **Python 3.11 x64**, esegui questi comandi in PowerShell dalla radice
-del checkout.
+Usa **CPython 3.14.10 x64 standard**. Con il gestore Python ufficiale,
+puoi estrarre il runtime nel checkout senza registrarlo in Windows.
+Esegui questi comandi in PowerShell dalla radice di un checkout senza una
+`.venv` preesistente. Se hai già il runtime esatto, usa il percorso del suo
+eseguibile per creare l'ambiente virtuale.
 
 ~~~powershell
-py -3.11 -m venv .venv
+py install --target=.runtime/python31410 3.14.10-64
+& '.\.runtime\python31410\python.exe' -m venv .venv
 $python = '.\.venv\Scripts\python.exe'
 & $python -m pip install -e .
 & $python -m pdf_annotator
@@ -83,6 +88,8 @@ L'output è `dist/windows/Windowed/fuPDF/`. Per produrre la variante diagnostica
 usa `-Mode Console`. Per ambiente sanificato, smoke test e inventario nativo,
 consulta le [istruzioni di packaging](tests/manual/windows_packaging.md) e la
 [qualifica dell'ambiente](tests/manual/windows_build_environment.md).
+Per preparare gli ZIP della prima distribuzione usa la
+[procedura di release Windows](tests/manual/windows_first_release.md).
 
 ## Licenza e contributi
 

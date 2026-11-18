@@ -63,3 +63,51 @@ def test_provenance_requires_matching_known_native_sources(tmp_path):
     toc.write_text(repr(([(source.name, r"D:\poppler\Python.dll", "BINARY")],)), encoding="utf-8")
     with pytest.raises(RuntimeError, match="Forbidden native source"):
         HELPER["provenance"](toc, bundle)
+
+
+@pytest.mark.parametrize("name", [
+    "environment.json", "native-inventory.json", ".env", "debug.log",
+    "_internal/editorial.pdf", "_internal/unexpected.dll",
+])
+def test_portable_contents_rejects_unlisted_files(tmp_path, name):
+    unexpected = tmp_path / name
+    unexpected.parent.mkdir(parents=True, exist_ok=True)
+    unexpected.write_bytes(b"fixture")
+    with pytest.raises(RuntimeError, match="Portable contents mismatch"):
+        HELPER["check_bundle_contents"](tmp_path, set(), ())
+
+
+@pytest.mark.parametrize("payload", ["local-path", "private-key-header"])
+def test_portable_contents_rejects_sensitive_bytes(tmp_path, payload):
+    path = Path("THIRD_PARTY_NOTICES.md")
+    home = Path(r"D:\Users\Example")
+    data = (str(home).encode("utf-16-le") if payload == "local-path"
+            else b"-----BEGIN PRIVATE KEY-----\nQUJDREVGR0hJSktMTU5PUA==\n-----END PRIVATE KEY-----")
+    (tmp_path / path).write_bytes(data)
+    with pytest.raises(RuntimeError, match="Private material"):
+        HELPER["check_bundle_contents"](tmp_path, {path}, (home,))
+
+
+def test_portable_checks_members_of_stdlib_zip(tmp_path):
+    from zipfile import ZipFile
+
+    path = Path("_internal/base_library.zip")
+    (tmp_path / path).parent.mkdir()
+    with ZipFile(tmp_path / path, "w") as archive:
+        archive.writestr("pkg/allowed.pyc", b"sample")
+    HELPER["check_bundle_contents"](tmp_path, {path}, ())
+    with ZipFile(tmp_path / path, "a") as archive:
+        archive.writestr("pkg/private.pdf", b"sample")
+    with pytest.raises(RuntimeError, match="Unexpected stdlib ZIP member"):
+        HELPER["check_bundle_contents"](tmp_path, {path}, ())
+
+
+def test_portable_distinguishes_symbols_from_provider_tokens(tmp_path):
+    path = Path("resource.bin")
+    resource = tmp_path / path
+    prefix = b"gh" + b"u_"
+    resource.write_bytes(b"symbol_" + prefix + b"a" * 792)
+    HELPER["check_bundle_contents"](tmp_path, {path}, ())
+    resource.write_bytes(b"\x00" + prefix + b"A0" * 18 + b"\x00")
+    with pytest.raises(RuntimeError, match="Private material"):
+        HELPER["check_bundle_contents"](tmp_path, {path}, ())

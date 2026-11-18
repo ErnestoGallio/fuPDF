@@ -1,5 +1,6 @@
 # One configuration for both diagnostic console and windowed portable builds.
 import os
+import runpy
 from pathlib import Path
 
 ROOT = Path(SPECPATH).resolve().parents[1]
@@ -7,6 +8,9 @@ mode = os.environ.get("FUPDF_BUILD_MODE", "Windowed")
 if mode not in ("Console", "Windowed"):
     raise ValueError("FUPDF_BUILD_MODE must be Console or Windowed")
 assets = ROOT / "src/pdf_annotator/assets"
+system_vc_runtime = os.environ.get("FUPDF_SYSTEM_VC_RUNTIME") == "1"
+is_vc_runtime_path = runpy.run_path(str(ROOT / "packaging/windows/build_environment.py"))[
+    "is_vc_runtime_path"]
 
 a = Analysis(
     [str(ROOT / "packaging/windows/launcher.py")],
@@ -35,6 +39,8 @@ kept_gui_plugins = {"platforms/qwindows.dll", "styles/qmodernwindowsstyle.dll",
 def needed_binary(entry):
     path = entry[0].replace("\\", "/").lower()
     filename = path.rsplit("/", 1)[-1]
+    if system_vc_runtime and is_vc_runtime_path(path):
+        return False
     if filename in unused_qt or filename.startswith("qt6qml"):
         return False
     prefix = "pyside6/plugins/"

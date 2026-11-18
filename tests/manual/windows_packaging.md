@@ -57,7 +57,9 @@ see [resolved environment diagnosis](windows_build_environment.md).
 
 ## Reproduce and transfer
 
-From the repository root with its pinned `.venv`:
+The results above describe the historical Python 3.11.9 build. For a current
+candidate use standard CPython 3.14.10 x64 and a fresh `.venv` as described in the
+[README](../../README.md#avvio-da-sorgente). From the repository root:
 
 ```powershell
 .venv/Scripts/python.exe -m pip install -r packaging/windows/requirements-build.txt
@@ -73,7 +75,7 @@ Outputs (transfer entire application folder including `_internal`):
 - `dist/windows/Windowed/fuPDF/fuPDF.exe`
 
 Build-generated `environment.json` and `native-inventory.json` record discovery
-and provenance; additional local static reports remain ignored with build/dist.
+and provenance under `build/windows/`. They stay outside the portable folder.
 `build/`, `dist/`, logs, temporary diagnostics and target artifacts are not tracked.
 Version resource and ICO are intentional reproducible packaging inputs.
 
@@ -89,6 +91,79 @@ git diff --check
 ```
 
 All PASS (diff check may show line-ending conversion notices).
+
+## Candidata di distribuzione Windows x64 (M22.6c)
+
+La procedura per la [prima release Windows](windows_first_release.md)
+usa la variante successiva con CRT di sistema. Il comando qui sotto
+riproduce la candidata storica M22.6c con CRT app-local.
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File packaging/windows/build.ps1 -Mode Windowed -DistributionCandidate
+```
+
+La cartella `dist/windows/Python-3.14.10-distribution-candidate/fuPDF` è
+l'unica radice da trasferire per questo collaudo. L'inventario privato,
+l'ambiente e la cache PyInstaller rimangono in
+`build/windows/Python-3.14.10-distribution-candidate`. Il controllo finale
+rifiuta file fuori inventario, sorgenti binarie estranee e percorsi del
+checkout o del profilo utente. Gli avvisi per la candidata e le fonti da
+verificare sono in [THIRD_PARTY_NOTICES.md](../../packaging/windows/THIRD_PARTY_NOTICES.md).
+La radice verificata può essere usata per preparare successivamente lo ZIP
+dopo aver chiuso i requisiti indicati negli avvisi.
+
+### Collaudo di sostituzione Qt
+
+1. Copia il bundle in due directory fuori dal checkout, per esempio
+   `C:\QA\fuPDF-baseline` e `C:\QA\fuPDF-qt-test`. Conserva la prima
+   come riferimento. Registra gli SHA-256 del gruppo Qt con `Get-FileHash`.
+2. Procurati un gruppo alternativo autentico compilato per Windows x64,
+   Qt 6.11.2 shared release con ABI MSVC compatibile, binding e Shiboken
+   6.11.2 per CPython ABI3 standard. Registra revisioni, patch, toolchain,
+   configurazione e hash. Usa gli stessi moduli e plugin applicabili. Prima
+   della copia, confronta architettura, import (inclusi delay-load) ed export
+   con `dumpbin /headers`, `dumpbin /imports` e `dumpbin /exports` dal
+   prompt strumenti MSVC. Controlla anche i simboli Qt privati richiesti
+   dai plugin. La corrispondenza delle versioni da sola non garantisce
+   compatibilità. Serve un gruppo con almeno un binario diverso per dimostrare
+   la sostituzione.
+3. Sostituisci solo il gruppo pertinente nella copia di prova, mantenendone
+   struttura e nomi. Include `Qt6Core/Gui/Widgets/Network.dll`, i quattro
+   binding `Qt*.pyd`, `pyside6.abi3.dll`, `Shiboken.pyd`,
+   `shiboken6.abi3.dll` e i plugin di piattaforma, stile, ICO, rete e TLS
+   nelle sottocartelle originali. Registra separatamente l'eventuale
+   `opengl32sw.dll` della stessa distribuzione Qt e il runtime Microsoft.
+4. Da una shell di prova senza ambiente Python/Qt attivo, imposta
+   `PATH` a `$env:SystemRoot\System32;$env:SystemRoot` e rimuovi
+   `PYTHONHOME`, `PYTHONPATH`, `QT_PLUGIN_PATH`,
+   `QT_QPA_PLATFORM_PLUGIN_PATH`, `QML_IMPORT_PATH` e
+   `QML2_IMPORT_PATH`. Avvia il candidato dalla directory esterna,
+   passando come argomento una copia di
+   `tests/fixtures/m10/acrobat-reader-editorials.pdf`.
+5. Con la GUI in esecuzione, verifica i moduli caricati. Seleziona il PID
+   dell'EXE appena avviato e quello del suo worker. Il risultato deve
+   identificare le DLL della copia di prova, con gli hash alternativi.
+
+   ```powershell
+   Get-Process -Id $guiPid, $workerPid | ForEach-Object {
+       $_.Modules | Where-Object {
+           $_.ModuleName -match 'Qt6|^Qt.*\.pyd$|pyside6|shiboken|qwindows|python314|mupdf'
+       } | Select-Object ModuleName, FileName, @{Name='SHA256'; Expression={
+           (Get-FileHash -Algorithm SHA256 -LiteralPath $_.FileName).Hash
+       }}
+   }
+   ```
+
+6. In entrambi i bundle verifica rendering a due zoom, ricerca,
+   visualizzazione annotazioni, Salva con nome su un PDF nuovo, riapertura
+   e conservazione di testo e annotazioni. Verifica che la GUI si chiuda e
+   il worker termini. Usa la procedura di
+   [qualifica Windows](windows_release_qualification.md) per i passaggi
+   manuali. Per coprire TLS, usa un endpoint di test locale con dati
+   sintetici, senza avviare la revisione sul servizio reale.
+7. Registra esiti e hash per baseline e prova. Un PASS dimostra il
+   funzionamento per il gruppo verificato. Senza un gruppo alternativo
+   autentico e compatibile, il collaudo della sostituibilità resta aperto.
 
 ## Remaining qualification and subsequent phases
 
