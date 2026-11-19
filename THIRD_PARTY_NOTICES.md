@@ -3,8 +3,14 @@
 Inventario del candidato portabile **fuPDF v0.18.0 per Windows x64**. Le versioni
 derivano dai metadati dei pacchetti, dai binari e dalle risorse presenti nel
 candidato, con riscontro sui sorgenti versionati. Gli avvisi e i testi qui
-raccolti preparano la distribuzione pubblica. La verifica del pacchetto di
-rilascio e la disponibilità dei sorgenti corrispondenti restano da completare.
+raccolti preparano la distribuzione pubblica. M22.7 ha prodotto ZIP binario
+e sorgenti dal commit pubblico
+`07a992d46f8b8c0d1dd5b3c737e0922b85578a8a`, con ricevute e SHA-256.
+L'inventario attuale del bundle è negli
+[avvisi Windows](packaging/windows/THIRD_PARTY_NOTICES.md);
+obblighi e dubbi residui sono nella
+[matrice M22.8](tests/manual/windows_redistribution.md#verifica-m228-degli-obblighi-effettivi).
+Le correzioni documentali non modificano gli ZIP M22.7.
 
 ## Componenti inclusi
 
@@ -12,18 +18,18 @@ rilascio e la disponibilità dei sorgenti corrispondenti restano da completare.
 | --- | --- |
 | **PyMuPDF 1.28.2 e MuPDF 1.28.2** | `_extra.pyd`, `_mupdf.pyd`, `mupdfcpp64.dll` e moduli Python nel bundle. PyMuPDF e MuPDF sono distribuiti da Artifex con opzione GNU AGPLv3 oppure licenza commerciale. La distribuzione proposta usa l'opzione AGPLv3. Conservare anche gli avvisi dei componenti e dei font incorporati da MuPDF e quelli applicabili agli output secondo Artifex. [PyMuPDF 1.28.2](https://github.com/pymupdf/PyMuPDF/releases/tag/1.28.2) · [Sorgenti MuPDF 1.28.2](https://github.com/ArtifexSoftware/mupdf/tree/1.28.2) · [Licenza Artifex](https://pymupdf.io/licensing) |
 | **PySide6, Shiboken6 e Qt 6.11.2** | Binding e DLL dei moduli Core, Gui, Widgets e Network. Presenti i plugin Windows, stile, ICO, informazioni di rete e backend TLS. I wheel dichiarano opzioni LGPLv3 o GPL, con opzione commerciale separata. L'opzione proposta per i componenti che la offrono è LGPLv3. Includere i testi [LGPLv3](LICENSES/LGPL-3.0-only.txt) e [GPLv3](LICENSES/GPL-3.0-only.txt), gli avvisi di copyright e le attribuzioni dei componenti realmente inclusi. [PySide/Shiboken 6.11.2](https://github.com/pyside/pyside-setup/tree/v6.11.2) · [Qt Base 6.11.2](https://github.com/qt/qtbase/tree/v6.11.2) · [Licenze Qt for Python](https://doc.qt.io/qtforpython-6/licenses.html) · [Licenze Qt 6.11](https://doc.qt.io/qt-6.11/licensing.html) |
-| **Traduzioni Qt 6.11.2** | Il candidato contiene 96 cataloghi `qt_*.qm`, `qtbase_*.qm` e `qt_help_*.qm`. Le regole upstream indicano le opzioni per la categoria modulo. Per il pacchetto pubblico mappare i cataloghi effettivi ai sorgenti `.ts` e agli avvisi applicabili, inclusi quelli provenienti da altri moduli. [Regole di licenza Qt Translations 6.11.2](https://github.com/qt/qttranslations/blob/v6.11.2/licenseRule.json) |
-| **CPython 3.11.9** | `python311.dll`, `python3.dll`, `base_library.zip` ed estensioni della libreria standard. Conservare i termini PSF, le licenze storiche applicabili e gli avvisi di terze parti del [file di licenza dell'installazione Windows](LICENSES/CPython-3.11.9.txt). [Sorgenti e licenza CPython 3.11.9](https://github.com/python/cpython/blob/v3.11.9/LICENSE) |
-| **Librerie native del runtime CPython** | `libssl-3.dll` e `libcrypto-3.dll` sono **OpenSSL 3.0.13**, sotto [Apache 2.0](LICENSES/OpenSSL-3.0.13.txt). `libffi-8.dll` proviene dal runtime Windows, il cui manifest upstream fissa **libffi 3.4.4** ([testo MIT](LICENSES/libffi-3.4.4.txt)). La release CPython usa **bzip2 1.0.8** per `_bz2.pyd` (avviso nel file CPython), **XZ 5.2.5** per `_lzma.pyd` ([termini upstream per componente](LICENSES/XZ-5.2.5.txt)), **Expat 2.6.0** per `pyexpat.pyd` ([testo MIT](LICENSES/Expat-2.6.0.txt)) e **zlib 1.3.1** ([licenza zlib](LICENSES/zlib-1.3.1.txt)). [Manifest PCbuild di CPython 3.11.9](https://github.com/python/cpython/blob/v3.11.9/PCbuild/get_externals.bat) · [Licenza OpenSSL 3.0.13](https://github.com/openssl/openssl/blob/openssl-3.0.13/LICENSE.txt) |
-| **Mesa llvmpipe e LLVM** | `opengl32sw.dll` proviene dal wheel Qt. Il binario contiene i marcatori **Mesa 11.2.2** e **LLVM 3.6.2**, coerenti con la distribuzione storica Qt. Il [testo MIT del core Mesa](LICENSES/Mesa-11.2.2-core.txt) e la [licenza LLVM 3.6.2](LICENSES/LLVM-3.6.2.txt), University of Illinois/NCSA con avvisi di terze parti, sono inclusi. Completare il riscontro sui sorgenti, le patch Qt e gli avvisi di Gallium/llvmpipe e degli altri file effettivamente compilati nella DLL. Il testo del core Mesa copre solo il core. [Archivio Mesa 11.2.2](https://archive.mesa3d.org/older-versions/11.x/11.2.2/) · [Build llvmpipe Qt](https://wiki.qt.io/MesaLlvmpipe) · [Licenza LLVM 3.6.2](https://github.com/llvm/llvm-project/blob/llvmorg-3.6.2/llvm/LICENSE.TXT) |
-| **Microsoft Visual C++ Runtime** | `VCRUNTIME140*.dll` in versione **14.38.33126.1** nella radice di `_internal` e **14.44.35211.0** nei pacchetti Qt/Shiboken, dove sono presenti anche `MSVCP140*.dll` **14.44.35211.0**. Sono componenti soggetti ai termini Microsoft. Prima di ridistribuire le DLL singole, verificare la provenienza di ciascuna copia, la lista REDIST e l'autorizzazione applicabile al distributore. [Redistribuzione Visual C++](https://learn.microsoft.com/en-us/cpp/windows/redistributing-visual-cpp-files?view=msvc-170) |
+| **Traduzioni Qt 6.11.2** | Il candidato contiene 96 cataloghi `qt_*.qm`, `qtbase_*.qm` e `qt_help_*.qm`. Le regole upstream indicano le opzioni per la categoria modulo. M22.6 ha mappato i cataloghi effettivi ai sorgenti `.ts` e agli avvisi applicabili, inclusi quelli provenienti da altri moduli. [Regole di licenza Qt Translations 6.11.2](https://github.com/qt/qttranslations/blob/v6.11.2/licenseRule.json) |
+| **CPython 3.14.10** | `python314.dll`, `python3.dll`, `base_library.zip` ed estensioni della libreria standard. Conservare i termini PSF, le licenze storiche applicabili e gli avvisi di terze parti del file LICENSES/CPython-3.14.10.txt incluso nel bundle. [Sorgenti e licenza CPython 3.14.10](https://github.com/python/cpython/blob/v3.14.10/LICENSE) |
+| **Librerie native del runtime CPython** | `libssl-3.dll` e `libcrypto-3.dll` sono **OpenSSL 3.5.9**, sotto [Apache 2.0](LICENSES/OpenSSL-3.5.9.txt). `libffi-8.dll` proviene dal runtime Windows, il cui manifest upstream fissa **libffi 3.4.4** ([testo MIT](LICENSES/libffi-3.4.4.txt)). La release CPython usa **bzip2 1.0.8** per `_bz2.pyd` (avviso nel file CPython), **XZ 5.2.5** per `_lzma.pyd` ([termini upstream per componente](LICENSES/XZ-5.2.5.txt)), **Expat 2.9.0** per `pyexpat.pyd` ([testo MIT](LICENSES/Expat-2.9.0.txt)) e **zlib-ng 2.2.4** ([licenza zlib](LICENSES/zlib-ng-2.2.4.txt)), **Zstandard 1.5.7** ([BSD](LICENSES/zstd-1.5.7.txt)) e **mpdecimal 2.5.1** ([BSD](LICENSES/mpdecimal-2.5.1.txt)). [Manifest PCbuild di CPython 3.14.10](https://github.com/python/cpython/blob/v3.14.10/PCbuild/get_externals.bat) · [Licenza OpenSSL 3.5.9](https://github.com/openssl/openssl/blob/openssl-3.5.9/LICENSE.txt) |
+| **Mesa llvmpipe e LLVM** | `opengl32sw.dll` proviene dal wheel Qt. Il binario contiene i marcatori **Mesa 11.2.2** e **LLVM 3.6.2**, coerenti con la distribuzione storica Qt. Il [testo MIT del core Mesa](LICENSES/Mesa-11.2.2-core.txt) e la [licenza LLVM 3.6.2](LICENSES/LLVM-3.6.2.txt), University of Illinois/NCSA con avvisi di terze parti, sono inclusi. Gli avvisi VMware di llvmpipe/WGL/GDI sono inclusi nella candidata M22.7. La copertura degli altri avvisi incorporati resta un dubbio documentale; una patch list o ricompilazione identica non è richiesta dalle licenze permissive identificate. Il testo del core Mesa copre solo il core. [Archivio Mesa 11.2.2](https://archive.mesa3d.org/older-versions/11.x/11.2.2/) · [Build llvmpipe Qt](https://wiki.qt.io/MesaLlvmpipe) · [Licenza LLVM 3.6.2](https://github.com/llvm/llvm-project/blob/llvmorg-3.6.2/llvm/LICENSE.TXT) |
+| **Microsoft Visual C++ Runtime** | M22.7 non include DLL app-local né installer. L'ultimo Redistributable x64 v14 ufficiale è un prerequisito separato, collaudato dal titolare su Windows 11 pulito. [Istruzioni](packaging/windows/WINDOWS-PORTABLE.md). |
 | **PyInstaller 6.22.3** | Il bootloader e i moduli di avvio sono presenti in `fuPDF.exe`. La licenza GPLv2 o successiva ha un'eccezione per i bundle generati. Alcuni file upstream sono Apache 2.0. Il [testo del progetto PyInstaller](LICENSES/PyInstaller-6.22.3.txt) è conservato come riferimento. Le licenze delle dipendenze del bundle si applicano anche con l'eccezione. [Licenza PyInstaller 6.22.3](https://pyinstaller.org/en/v6.22.3/license.html) |
 
 La revisione IA usa la libreria standard Python per HTTPS. Il bundle non
 contiene un SDK Python OpenAI. PySide6 Addons fa parte delle dipendenze del
 wheel PySide6, mentre il candidato contiene i moduli Qt elencati sopra.
 
-Nell'ambiente di build, altgraph 0.17.5, pefile 2024.8.26 e setuptools 65.5.0
+Nell'ambiente di build, altgraph 0.17.5, pefile 2024.8.26 e setuptools 84.2.1
 hanno testi MIT. Pywin32-ctypes 0.2.3 usa BSD-3-Clause e packaging 26.3 offre
 Apache-2.0 oppure BSD-2-Clause. Il testo del wheel `pyinstaller-hooks-contrib`
 2026.8 distingue gli hook di build (GPL-2.0-or-later) dagli eventuali hook
@@ -52,21 +58,23 @@ Mantenere i diritti di modifica delle parti LGPL e di reverse engineering
 necessario a diagnosticare tali modifiche. La verifica della via del
 collegamento condiviso (§4(d)(1)) deve dimostrare che il bundle funziona con
 librerie modificate compatibili a livello di interfaccia, inclusi binding
-e plugin pertinenti. L'esistenza di DLL separate nel bundle PyInstaller
-lascia aperta questa verifica perché parte del codice Python è congelata
-nell'EXE. Se il meccanismo condiviso risulta insufficiente, il §4(d)(0)
+e plugin pertinenti. La prova M22.6e con il gruppo ufficiale 6.11.3 ha superato avvio,
+worker, Save As e riapertura senza ricompilare l'EXE. La procedura e i
+diritti sono documentati in WINDOWS-PORTABLE.md; il sorgente delle
+librerie resta un obbligo separato. Se il meccanismo condiviso risulta insufficiente, il §4(d)(0)
 prevede sorgente minimo corrispondente e codice applicativo corrispondente,
 in forma e con istruzioni che permettano la ricombinazione o il relink.
 Fornire le informazioni di installazione quando richieste dal §4(e).
 [Testo LGPLv3](LICENSES/LGPL-3.0-only.txt) · [Obblighi open source Qt](https://www.qt.io/development/open-source-lgpl-obligations)
 
-Per il primo ZIP pubblico restano da verificare gli avvisi dei componenti
-inclusi o compilati nei wheel MuPDF e Qt, i cataloghi delle traduzioni,
-le patch e le attribuzioni Mesa/LLVM, i permessi Microsoft, la disponibilità
-dei sorgenti corrispondenti e la sostituzione o il relink delle librerie Qt.
-Il candidato locale contiene i due avvisi dei font. La procedura di creazione
-del pacchetto pubblico dovrà includere anche gli altri avvisi, i testi e le
-indicazioni sui sorgenti applicabili al bundle definitivo.
+Gli ZIP M22.7 includono 19 testi di licenza e gli avvisi dei font.
+Il sorgente fuPDF è abbinato al commit pubblico; otto archivi upstream,
+ricette e SHA-256 sono nel set sorgenti. I dubbi specifici su sufficienza
+del sorgente copyleft e copertura degli avvisi incorporati sono classificati
+in M22.8. SBOM, log originali e ricompilazione identica non sono requisiti
+autonomi. Questo software si basa in parte sul lavoro del FreeType Team.
+Gli asset dovranno essere rigenerati dopo il commit dei documenti aggiornati
+e offerti con accesso equivalente a sorgenti e binario.
 
 ## Font e altre risorse
 

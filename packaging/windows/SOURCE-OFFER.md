@@ -22,23 +22,42 @@ Gli archivi upstream mantengono i byte originali. SHA256SUMS e
 source-archives.json riportano verifica e origini. Nel pacchetto di
 release sono nella cartella sources accanto all'archivio applicativo.
 
-Questo set resta un candidato per la verifica del sorgente
-corrispondente. Mancano la conferma delle configurazioni e patch
-complete dei binari upstream, l'inventario definitivo delle
-attribuzioni delle unità effettivamente incorporate e la risoluzione delle
-risorse font MuPDF rimaste senza corrispondenza raw nell'inventario M22.6g. Nessuna patch è stata dedotta dai soli
-numeri di versione.
+## Stato M22.7 e limiti M22.8
 
-Per la futura offerta AGPLv3, produrre il sorgente fuPDF dal commit
-effettivamente usato per la build e registrare commit, hash, pin, script,
-configurazioni e patch necessari. Completare le evidenze per gli
-upstream inclusi o ricostruirli da sorgenti e configurazione registrati,
-includendo gli avvisi applicabili. Pubblicare lo ZIP binario e gli asset
-del sorgente corrispondente nella stessa GitHub Release, con accesso
-equivalente e senza costi aggiuntivi per il sorgente. Conservare
-l'abbinamento mediante gli SHA-256. Per Qt conservare le istruzioni
-di sostituzione e le informazioni d'installazione applicabili nella
-documentazione allegata al binario.
+La build M22.7 usa l'export del commit pubblico
+`07a992d46f8b8c0d1dd5b3c737e0922b85578a8a`.
+Lo ZIP sorgenti esiste e contiene l'export applicativo esatto, gli otto
+archivi upstream verificati, ricette, avvisi e ricevuta.
+La futura offerta al pubblico si completa rendendo disponibili binario
+e sorgenti con accesso equivalente senza costo aggiuntivo per il sorgente,
+secondo AGPLv3 §6(d); la stessa GitHub Release è la modalità scelta.
+
+Gli archivi PyMuPDF/MuPDF e Qt contengono i sorgenti delle versioni
+identificate e ricette upstream: setup.py, Makefile/Makerules, CMake e
+build_scripts. Non sono state applicate modifiche locali alle librerie.
+Non è conclusa la valutazione della sufficienza del set rispetto a eventuali
+modifiche o script ulteriori necessari ai binari upstream. Non è stata
+identificata una patch concreta assente. Vedere la
+[matrice M22.8](https://github.com/ErnestoGallio/fuPDF/blob/main/tests/manual/windows_redistribution.md#verifica-m228-degli-obblighi-effettivi).
+Non sono richiesti di per sé SBOM, log originali, tutte le opzioni storiche
+o binari riproducibili byte per byte. Restano invece necessari i file e
+gli script che il §1 include effettivamente nel sorgente corrispondente.
+
+Per Mesa/LLVM, MIT/NCSA richiedono la conservazione degli avvisi applicabili;
+non impongono in generale sorgenti o patch per distribuire il solo binario.
+Per i font OFL occorrono licenza e copyright e rispetto dei Reserved Font
+Names; non è previsto un obbligo generale di consegnare il progetto sorgente.
+I dubbi sulle parti incorporate non attribuite con certezza restano in matrice.
+
+Per Qt conservare sorgenti pertinenti, testi GPLv3/LGPLv3 e istruzioni di
+sostituzione e debug. La prova con il gruppo 6.11.3 è già superata;
+la candidata mantiene 6.11.2. Il test non certifica da solo la completezza
+del sorgente LGPL.
+
+Gli ZIP M22.7 contengono i documenti precedenti e non vengono modificati.
+Per ogni candidata successiva usare il nuovo commit pubblico e rigenerare
+build, ZIP, ricevute e hash con la procedura esistente. Il commit effettivo
+è registrato nelle ricevute generate, non fissato in questo documento.
 
 ## Abbinamento al futuro commit di release
 

@@ -5,7 +5,11 @@ M22.6c, con Qt/PySide6/Shiboken 6.11.2. Le prove usano copie diagnostiche
 fuori dal checkout, avviate sullo stesso host. I binari e l'icona originali
 restano intatti.
 
-## Matrice di conformità
+Per lo stato corrente fa fede la [verifica M22.8](#verifica-m228-degli-obblighi-effettivi).
+Le matrici M22.6 sottostanti sono registrazioni storiche e non impongono
+SBOM, log o link map come condizioni autonome di distribuzione.
+
+## Matrice di conformità storica M22.6
 
 | Componente | Obbligo | Evidenza | Intervento | Verifica residua | Blocca lo ZIP? |
 | --- | --- | --- | --- | --- | --- |
@@ -123,7 +127,7 @@ richiedere in generale binari riproducibili byte per byte.
 - [Visual Studio Community 2026](https://visualstudio.microsoft.com/license-terms/vs2026-ga-community/), [REDIST 2022](https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution), [REDIST 2026](https://learn.microsoft.com/en-us/visualstudio/releases/2026/redistribution), [EULA runtime 2015–2022](https://visualstudio.microsoft.com/license-terms/vs2022-cruntime/), [EULA runtime 2026](https://visualstudio.microsoft.com/license-terms/vs2026-ga-visualcpp-v14-redist-runtime/) e [download ufficiale](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist)
 
 
-## Verifica conclusiva M22.6g
+## Verifica conclusiva storica M22.6g
 
 Gli ZIP M22.6f esistenti restano invariati. I loro SHA-256 coincidono
 con il manifesto locale. Lo ZIP sorgenti contiene 311 file applicativi,
@@ -152,3 +156,65 @@ termine o un'autorizzazione ambigua, senza sostituire le evidenze tecniche.
 - [Download VC++ x64](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist)
 - [Ricetta CRT di CPython 3.14.10](https://github.com/python/cpython/blob/v3.14.10/PCbuild/pyproject.props)
 - [Inventario dei font MuPDF](../../packaging/windows/mupdf-embedded-fonts.json) e [offerta dei sorgenti](../../packaging/windows/SOURCE-OFFER.md)
+
+## Verifica M22.8 degli obblighi effettivi
+
+Ambito: candidata M22.7, commit pubblico
+`07a992d46f8b8c0d1dd5b3c737e0922b85578a8a`, Python 3.14.10,
+Qt/PySide6/Shiboken 6.11.2, senza CRT Microsoft app-local.
+La classificazione seguente sostituisce i giudizi correnti delle matrici
+storiche M22.6. Nessuna nuova analisi forense o ricompilazione upstream.
+
+### Evidenze sugli ZIP M22.7
+
+- Binario: 59.877.514 byte, SHA-256
+  `8b2db8b3c974bfad0a39ad74fd10cca44728dbd2e10bc8ac416aced1fa060ab2`.
+- Sorgenti: 260.144.796 byte, SHA-256
+  `0267f71cf3e921dc3ae70e5f5991eecd04c9f1a6b12b4e968ba2c8cbee3fd1e4`.
+- CRC integri, otto archivi con digest conformi all'inventario.
+  RELEASE-SOURCE.json identifica commit, tree e hash dell'export.
+  Il sorgente fuPDF comprende 314 file con pin, spec e script.
+- Nel binario: LICENSE, 19 testi in LICENSES, avvisi dei due font
+  applicativi e WINDOWS-PORTABLE. Assenti le DLL CRT e l'installer.
+- Il titolare comunica PASS su Windows 11 pulito per avvio con runtime
+  ufficiale Visual C++ x64, rendering, annotazioni, salvataggio,
+  riapertura e finestra IA. Versione del runtime della prova non fornita.
+- Prova Qt M22.6e: sostituzione con gruppo ufficiale 6.11.3 riuscita,
+  con worker, Save As e riapertura, senza ricompilare l'EXE.
+  La firma digitale è distinta dagli obblighi delle licenze considerate.
+
+### Classificazione e interventi limitati
+
+| Componente / requisito | Categoria | Evidenza e limite | Intervento indispensabile |
+| --- | --- | --- | --- |
+| fuPDF, AGPLv3 §§1, 4–6 | Obbligo soddisfatto per i materiali preparati | LICENSE integrale, export del commit esatto con ricevuta e ricetta. | Offrire gli asset sorgente con accesso equivalente al binario e mantenerli disponibili (§6(d)); è un adempimento della futura pubblicazione. |
+| PyMuPDF/MuPDF: licenze e avvisi mappati | Obbligo soddisfatto per i componenti identificati | PyMuPDF-1.28.2.txt, MuPDF-1.28.2.txt, vendored-notices e font-notices nel binario. Attribuzione esplicita FreeType aggiunta alla documentazione M22.8. | Includere i documenti aggiornati negli asset rigenerati; conservare i testi validi. |
+| PyMuPDF/MuPDF: completezza del sorgente corrispondente | Dubbio interpretativo sulla sufficienza del set | Wheel ufficiale non modificato localmente, commit PyMuPDF dichiarato dal wheel, tarball MuPDF identificata e config.h riscontrato. Sdist e tarball con setup.py, Makefile/Makerules e progetto Windows. Non è identificata una patch concreta assente; non è attestata la sufficienza rispetto a eventuali script/modifiche ulteriori necessari alla build upstream. | Valutare se il set copra il §1; integrare soltanto eventuali file necessari realmente mancanti. Se la sufficienza resta controversa, parere specialistico sul set preciso. Non occorre obbligatoriamente un log originale. |
+| Qt/PySide6/Shiboken: testi, diritti e LGPLv3 §4(d)(1) | Obbligo soddisfatto per questi aspetti | GPL/LGPL presenti, avviso Qt, istruzioni di sostituzione/debug e gruppo DLL/binding/plugin sostituibile; prova 6.11.3 riuscita. Nessun vincolo applicativo di firma/hash sulle DLL. | Conservare avvisi, diritti e procedura. Un'ulteriore modifica arbitraria del codice Qt non è un requisito autonomo; il sorgente delle librerie resta distinto. |
+| Qt/PySide6/Shiboken: sorgente delle librerie | Dubbio interpretativo sulla sufficienza del set | Archivi ufficiali 6.11.2 QtBase/pyside-setup/QtTranslations/QtTools con CMake e script. Nessuna modifica locale. Non è conclusa la sufficienza delle ricette per le DLL dei wheel; non è provata una modifica omessa. | Fornire eventuali modifiche/script necessari effettivamente assenti, se individuati. Non imporre CMakeCache originale o SBOM. Parere specialistico limitato alla sufficienza del set se il dubbio persiste. |
+| Cataloghi Qt | Obbligo soddisfatto per i materiali preparati | 96 cataloghi mappati in M22.6; QtTranslations/QtTools, istruzioni lrelease e testi GPL/LGPL disponibili. | Offrire il set insieme al binario; nessun obbligo per Qt Multimedia non distribuito. |
+| Mesa/LLVM e terze parti incorporate Qt/MuPDF: avvisi non mappati | Dubbio interpretativo/documentale sulla copertura | MIT Mesa, VMware llvmpipe/WGL/GDI, NCSA LLVM e raccolte Qt/MuPDF presenti. Restano glapi/compiler/glsl segnalati in M22.6g; LLVM LICENSE rimanda ad avvisi separati, fra cui lib/Support/COPYRIGHT.regex. Gli archivi sorgente conservano gli avvisi, ma non è conclusa la loro copertura nei materiali che accompagnano il binario. | Integrare nel materiale del binario gli avvisi applicabili se mancanti. Non dichiarare un'omissione certa per oggetti non identificati. MIT/NCSA non impongono in generale sorgenti, patch list o link map. |
+| Font Source Sans 3 / Courier Prime | Obbligo soddisfatto | OFL e copyright accanto agli otto TTF, font e nomi originali invariati. | Conservare i testi e rispettare RFN per eventuali modifiche. Non occorre in generale il progetto sorgente. |
+| Font MuPDF | Obbligo soddisfatto per i 177 identificati; dubbio documentale per altri candidati | Raccolta con OFL/copyright e NOTICE Droid/Apache. L'inventario elenca i candidati senza match raw, che non prova né presenza né assenza dal binario. | Per SourceHanSerif-Regular.ttc e gli altri candidati dell'inventario, aggiungere avvisi specifici solo se distribuiti e non già coperti. Non imporre il match byte per byte come obbligo. |
+| CPython, native permissive identificate e PyInstaller | Obbligo soddisfatto per i componenti identificati | PSF e avvisi storici, OpenSSL/Apache, libffi, XZ, Expat, zlib-ng, Zstd, mpdecimal e PyInstaller con eccezione presenti. | Conservare i testi. Le sole licenze permissive identificate non impongono in generale la consegna del sorgente. |
+| Microsoft Visual C++ | Obbligo di redistribuzione app-local non applicabile | DLL e installer assenti; destinatario usa il download ufficiale. Collaudo Windows 11 pulito riferito dal titolare. | Conservare link e prerequisito. Non occorre un titolo di redistribuzione per file non distribuiti. |
+| SBOM ufficiale, log originali, link map, hash uguale di ricompilazione | Informazione supplementare non obbligatoria | Nessun requisito autonomo nelle licenze qui applicabili. Possono sostenere la verifica senza essere l'unica evidenza ammessa. | Nessuno. Restano obbligatori gli avvisi e il sorgente con gli script effettivamente necessari. |
+
+Non è stata individuata una dipendenza senza un titolo di licenza applicabile.
+Per i componenti mappati non è documentata un'omissione residua certa, dopo
+l'esplicitazione dell'attribuzione FreeType nei nuovi documenti.
+Questo non prova da solo la conformità completa: sufficienza del sorgente
+copyleft e copertura degli avvisi incorporati restano i dubbi specifici sopra.
+L'assenza di un SBOM o di un log originale non li trasforma automaticamente
+in obblighi non soddisfatti. Non è una certificazione legale.
+
+Gli ZIP M22.7 restano immutati. Dopo il nuovo commit, rigenerare build e
+archivi dal commit aggiornato per includere questi documenti, con nuove
+ricevute e SHA-256. M22.8 non esegue tali operazioni.
+
+Riferimenti: [AGPLv3 §§1, 4–6](../../LICENSE),
+[LGPLv3 §4](https://doc.qt.io/qt-6.11/lgpl.html),
+[istruzioni Qt](https://www.qt.io/development/open-source-lgpl-obligations),
+[OFL 1.1](https://openfontlicense.org/open-font-license-official-text/).
+Per Mesa/LLVM/FreeType fanno fede i testi delle versioni acquisite:
+docs/license.html, LICENSE.TXT, docs/FTL.TXT, negli archivi e nelle raccolte LICENSES.

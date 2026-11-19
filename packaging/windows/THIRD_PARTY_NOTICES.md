@@ -1,9 +1,19 @@
 # Avvisi di terze parti della candidata Windows x64
 
-Questo inventario descrive la candidata locale CPython 3.14.10. Il pacchetto
-include testi e avvisi verificati per i componenti elencati. Prima di distribuire
-lo ZIP restano da completare la corrispondenza di alcuni binari ai sorgenti,
-gli avvisi incorporati e la verifica sui file Microsoft descritti sotto.
+Questo inventario si applica alla candidata Python 3.14.10 compilata
+dall'esportazione del commit pubblico identificato da RELEASE-SOURCE.json
+e RELEASE-ASSETS.json. Queste ricevute e SHA256SUMS.txt identificano
+l'input e gli ZIP della singola compilazione, senza riferimenti circolari
+al commit nei documenti tracciati. M22.7 ha già prodotto e verificato
+una prima coppia di ZIP, distinta dalle candidate successive.
+Non vengono distribuiti CRT Microsoft app-local o installer Microsoft.
+Il titolare riferisce PASS su Windows 11 pulito per avvio, prerequisito
+Visual C++ x64 ufficiale, rendering, annotazioni, salvataggio, riapertura
+e finestra Revisione con IA. La versione installata del runtime in quella
+prova non è stata comunicata. Gli ZIP M22.7 restano immutati.
+La [matrice M22.8](https://github.com/ErnestoGallio/fuPDF/blob/main/tests/manual/windows_redistribution.md#verifica-m228-degli-obblighi-effettivi)
+distingue obblighi soddisfatti e dubbi residui, senza imporre prove forensi
+non richieste dalle licenze.
 
 | Componente nel pacchetto | Versione e licenza |
 | --- | --- |
@@ -12,8 +22,8 @@ gli avvisi incorporati e la verifica sui file Microsoft descritti sotto.
 | Qt per Python e Qt | PySide6 Essentials, Shiboken6 e Qt 6.11.2. Il pacchetto usa Qt Core, Gui, Widgets e Network, i plugin Windows, ICO, stile, informazione di rete e TLS. Sono incluse le licenze GNU LGPLv3 e GPLv3. Applicare la LGPLv3 dove offerta. Copyright (C) The Qt Company Ltd. and other contributors, come indicato nelle DLL. I 96 cataloghi Qt, QtBase e Qt Help seguono l'opzione LGPLv3 per i file di modulo di QtTranslations. Resta aperta la mappatura delle librerie incorporate in QtBase. |
 | CPython | 3.14.10 x64, `python314.dll`, `python3.dll`, estensioni e libreria standard. Il file `LICENSES/CPython-3.14.10.txt` è quello fornito dalla distribuzione PSF e include termini storici e avvisi di terze parti, fra cui bzip2 1.0.8. |
 | Dipendenze native CPython | OpenSSL 3.5.9 (Apache 2.0), libffi 3.4.4 (MIT), XZ 5.2.5 (termini per componente), Expat 2.9.0 (MIT), zlib-ng 2.2.4 (zlib), Zstandard 1.5.7 (opzione BSD), mpdecimal 2.5.1 (BSD). OpenSSL è verificato nei PE. Le altre versioni derivano dal manifest Windows o dai sorgenti vendorizzati del tag CPython. |
-| Mesa e LLVM | Il file Qt `opengl32sw.dll` riporta marcatori Mesa 11.2.2 e LLVM 3.6.2. Sono inclusi il testo MIT del core Mesa, gli avvisi sorgente VMware di llvmpipe e WGL e il testo LLVM/NCSA. Le sezioni PE corrispondono alla build Qt Win64 pubblicata. Patch esatte e ulteriori avvisi del codice compilato restano da confermare. |
-| Microsoft Visual C++ Runtime | La variante prevista per la prima release usa il Visual C++ Redistributable x64 v14 ufficiale più recente come prerequisito di sistema. Le copie app-local e l'installer sono esclusi. Le versioni **14.51.36247.0** (PSF) e **14.44.35211.0** (wheel Qt/Shiboken) riguardano la precedente variante app-local. |
+| Mesa e LLVM | Il file Qt `opengl32sw.dll` riporta marcatori Mesa 11.2.2 e LLVM 3.6.2. Sono inclusi il testo MIT del core Mesa, gli avvisi sorgente VMware di llvmpipe e WGL e il testo LLVM/NCSA. Le sezioni PE corrispondono alla build Qt Win64 pubblicata. Resta il dubbio documentale sulla copertura degli ulteriori avvisi applicabili; MIT/NCSA non richiedono in generale le patch esatte. |
+| Microsoft Visual C++ Runtime | La candidata M22.7 usa il Visual C++ Redistributable x64 v14 ufficiale più recente come prerequisito di sistema. Le copie app-local e l'installer sono esclusi. Le versioni **14.51.36247.0** (PSF) e **14.44.35211.0** (wheel Qt/Shiboken) riguardano la precedente variante app-local. |
 | PyInstaller | 6.22.3, bootloader e codice di avvio. Il testo incluso documenta GPLv2 o successiva con eccezione per il bundle e i file Apache 2.0. |
 | Font | Source Sans 3 3.052 e Courier Prime 3.018, SIL OFL 1.1, con gli avvisi in `_internal/pdf_annotator/assets/fonts`. |
 
@@ -41,10 +51,15 @@ storica Mesa resta aperta.
 
 ## Riferimenti per i sorgenti corrispondenti
 
-- **fuPDF** — fissare il commit effettivo del candidato definitivo e conservare i
-  pin, lo script di build, la spec PyInstaller e le istruzioni. Offrire il
-  sorgente corrispondente accanto al binario. Questa candidata proviene da un
-  working tree con adattamenti non ancora consolidati.
+- **fuPDF** — il commit pubblico e il tree della candidata sono registrati
+  in RELEASE-SOURCE.json; usare RELEASE-ASSETS.json per il legame con gli
+  asset. Il riferimento storico M22.7 è il commit
+  `07a992d46f8b8c0d1dd5b3c737e0922b85578a8a`, tree
+  `5979e440fca7ee40dc30417dcbf26444c448e1fb`.
+  Lo ZIP sorgenti contiene l'export esatto con pin, spec e script di build,
+  otto archivi upstream e RELEASE-SOURCE.json. RELEASE-ASSETS.json abbina
+  i due ZIP per SHA-256. La futura pubblicazione deve offrire sorgenti
+  e binario con accesso equivalente senza costo aggiuntivo per il sorgente.
 - **PyMuPDF/MuPDF** — consultare [setup.py 1.28.2](https://github.com/pymupdf/PyMuPDF/blob/1.28.2/setup.py),
   il [rilascio PyPI](https://pypi.org/project/PyMuPDF/1.28.2/#files) e il
   [sorgente MuPDF](https://mupdf.com/downloads/archive/mupdf-1.28.2-source.tar.gz)
@@ -86,10 +101,12 @@ storica Mesa resta aperta.
   I testi aggiunti provengono dai tag indicati o dal sorgente CPython.
 - **Mesa e LLVM** — [sorgente Mesa 11.2.2](https://archive.mesa3d.org/older-versions/11.x/11.2.2/),
   [licenza LLVM 3.6.2](https://github.com/llvm/llvm-project/blob/llvmorg-3.6.2/llvm/LICENSE.TXT)
-  e [ricetta llvmpipe Qt](https://wiki.qt.io/MesaLlvmpipe). Occorre correlare
-  patch e codice alla DLL effettiva.
+  e [ricetta llvmpipe Qt](https://wiki.qt.io/MesaLlvmpipe). Questi riferimenti
+  sostengono la provenienza; l'obbligo delle licenze permissive identificate
+  è conservare gli avvisi applicabili, non ricostruire la patch list storica.
 
-Per il rilascio, scaricare gli archivi dalle fonti indicate e confrontare
+Gli archivi M22.7 sono già acquisiti e verificati. Per ripetere la
+preparazione, scaricarli dalle fonti indicate e confrontare
 `Get-FileHash -Algorithm SHA256` con i digest ufficiali disponibili. Registrare
 anche commit, hash degli archivi sorgente, patch e istruzioni di build.
 Confrontare i file estratti dai wheel con gli hash dell'inventario binario
@@ -97,10 +114,27 @@ interno e pubblicare le informazioni necessarie senza percorsi locali. I
 riferimenti qui raccolti non costituiscono ancora un'offerta del sorgente
 corrispondente ai sensi delle licenze.
 
-Per le DLL Microsoft, verificare origine, lista REDIST e titolo di
-redistribuzione applicabile. In alternativa, qualificare una variante con
-il redistributable ufficiale x64 installato separatamente come prerequisito.
-Non rimuovere file dal candidato prima di verificare l'intera chiusura degli
-import nativi e il funzionamento su Windows pulito.
-[Termini Microsoft](https://learn.microsoft.com/en-us/cpp/windows/redistributing-visual-cpp-files)
-· [Lista REDIST](https://learn.microsoft.com/en-us/visualstudio/releases/2022/redistribution)
+La candidata M22.7 non ridistribuisce DLL Visual C++ né l'installer:
+non occorre quindi un titolo di redistribuzione app-local per file assenti.
+Il destinatario ottiene l'ultimo runtime x64 v14 supportato direttamente
+da Microsoft. [Istruzioni](WINDOWS-PORTABLE.md).
+
+La sostituzione del gruppo dinamico Qt/PySide6/Shiboken 6.11.2 con quello
+ufficiale 6.11.3 ha superato la prova M22.6e senza ricompilare l'EXE.
+[Istruzioni e diritti di modifica e debug](WINDOWS-PORTABLE.md#licenze-sorgenti-e-qt).
+Il meccanismo condiviso non sostituisce l'obbligo separato di fornire
+il sorgente delle librerie LGPL.
+
+Questo software si basa in parte sul lavoro del FreeType Team.
+L'attribuzione esplicita risponde al §2 della FreeType License, già
+riprodotta nelle raccolte degli avvisi MuPDF e Qt.
+
+AGPLv3 §1 richiede il sorgente necessario a generare, installare, eseguire
+e modificare il programma, inclusi gli script pertinenti. LGPLv3 §4
+disciplina la sostituzione. Non sono richiesti di per sé SBOM ufficiale,
+log originale del produttore o una ricompilazione con hash identico.
+Eventuali modifiche o script necessari mancanti resterebbero obbligatori;
+l'assenza di un log non dimostra da sola una lacuna del sorgente.
+Le licenze permissive Mesa/LLVM identificate richiedono gli avvisi
+applicabili, non in generale l'offerta di sorgenti e patch. I dubbi sulla
+copertura degli avvisi sono classificati nella matrice M22.8.

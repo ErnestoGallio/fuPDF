@@ -43,6 +43,13 @@ più recente da Microsoft](https://aka.ms/vc14/vc_redist.x64.exe).
 Il pacchetto può chiedere l'elevazione o un riavvio. Se è già presente
 una versione idonea non serve reinstallarla. [Documentazione Microsoft](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist)
 
+Il titolare riferisce un collaudo positivo della candidata M22.7 su
+Windows 11 pulito con il prerequisito ufficiale x64: avvio, rendering,
+annotazioni, salvataggio, riapertura e finestra Revisione con IA.
+La versione del runtime installata in quella prova non è stata comunicata:
+il risultato non fissa una soglia minima alternativa al requisito sopra.
+Lo ZIP non include DLL Visual C++ app-local né l'installer Microsoft.
+
 ## Licenze, sorgenti e Qt
 
 `LICENSE` e `THIRD_PARTY_NOTICES.md` descrivono fuPDF e le dipendenze.
@@ -58,7 +65,12 @@ rendering e Salva con nome. FuPDF consente la sostituzione delle
 librerie compatibili e il reverse engineering necessario al debug
 delle modifiche nei termini della LGPLv3.
 
-Per la distribuzione pubblica consulta gli asset della stessa release:
+La sostituzione è già stata collaudata in M22.6e con il gruppo ufficiale
+Qt/PySide6/Shiboken 6.11.3: avvio, worker, Save As e riapertura senza
+ricompilare l'EXE. La candidata mantiene 6.11.2.
+[Dettagli della prova](https://github.com/ErnestoGallio/fuPDF/blob/main/tests/manual/windows_redistribution.md#ripetere-il-collaudo-qt).
+
+Per la futura distribuzione pubblica consulta gli asset della stessa release:
 i sorgenti corrispondenti e la procedura sono disponibili accanto allo
 ZIP, senza sovrapprezzo. Consulta `SOURCE-OFFER.md` nel pacchetto
 sorgenti e le note della release per firma e sistemi collaudati.
