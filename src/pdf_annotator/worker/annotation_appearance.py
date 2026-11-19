@@ -1,4 +1,4 @@
-"""Rasterize a native external FreeText appearance in its owning worker."""
+"""Rasterize a native external annotation appearance in its owning worker."""
 
 import math
 from typing import Any
@@ -33,10 +33,11 @@ def render_annotation_appearance(document: Any, payload: dict[str, Any], *,
     page_index, xref = _native_id(payload.get("logical_id"))
     if payload.get("page_index") != page_index or not 0 <= page_index < document.page_count:
         raise ValueError("Invalid annotation page")
-    if document.xref_get_key(xref, "Subtype") != ("name", "/FreeText"):
-        raise ValueError("Annotation is not FreeText")
+    subtype = document.xref_get_key(xref, "Subtype")
+    if subtype not in (("name", "/FreeText"), ("name", "/Line")):
+        raise ValueError("Unsupported annotation appearance")
     ap_kind, _ap_value = document.xref_get_key(xref, "AP")
-    if ap_kind != "dict":
+    if ap_kind != "dict" and subtype != ("name", "/Line"):
         raise ValueError("Annotation has no normal appearance")
     limit = payload.get("max_bytes", MAX_SINGLE_RASTER_BYTES)
     if type(limit) is not int or not MIN_RASTER_BYTES <= limit <= raster_limit:
@@ -53,10 +54,16 @@ def render_annotation_appearance(document: Any, payload: dict[str, Any], *,
     size = pixmap.stride * pixmap.height
     if size > limit or pixmap.n != 4 or not pixmap.alpha:
         raise RuntimeError("Appearance renderer violated bounds")
+    coverage = pymupdf.Rect(pixmap.x / scale, pixmap.y / scale,
+                            (pixmap.x + pixmap.width) / scale,
+                            (pixmap.y + pixmap.height) / scale)
+    if subtype == ("name", "/Line"):
+        # In pinned 1.28.2, Annot.get_pixmap includes page rotation. Keep its
+        # display-oriented pixels, but return canonical coverage for the shared
+        # viewer mapper, which applies the display rotation exactly once.
+        coverage = coverage * page.derotation_matrix
     return ({"logical_id": payload["logical_id"], "page_index": page_index,
              "annotation_xref": xref, "width": pixmap.width, "height": pixmap.height,
              "stride": pixmap.stride, "format": "RGBA8888", "alpha": True,
              "byte_count": size, "requested_scale": requested, "raster_scale": scale,
-             "coverage": [pixmap.x / scale, pixmap.y / scale,
-                          (pixmap.x + pixmap.width) / scale,
-                          (pixmap.y + pixmap.height) / scale]}, pixmap.samples)
+             "coverage": list(coverage)}, pixmap.samples)

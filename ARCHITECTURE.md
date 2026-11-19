@@ -595,6 +595,8 @@ AnnotationModel(
 For supported annotation types store the geometry needed for Qt overlay painting:
 
 - Ink: list of point sequences;
+- Existing Line (M23.1): two ordered endpoints in inventory geometry, with
+  native line endings and border/color properties in the inventory style;
 - Highlight: ordered quads;
 - FreeText: rectangle plus fixed Base-14 font family and PDF-point size;
 - Callout: text rectangle + callout points;
@@ -619,6 +621,26 @@ Use PyMuPDF `Page.add_ink_annot()`.
 GUI previews the mouse path as a Qt overlay. The final path is converted once to canonical coordinates and submitted as `CreateInk` through the annotation service to the worker.
 
 App-created Ink may be moved only through an explicit `MoveInk` command carrying a canonical translation delta. During drag, the GUI paints a translated overlay only and sends no IPC. On release, the worker applies one serialized mutation to the native `/Ink` geometry. The translation is clamped as one vector so the complete path remains on its originating page; no point-wise clipping, cross-page transfer or shape deformation is allowed. PyMuPDF 1.28 exposes Ink vertices as read-only and does not translate an Ink rectangle, so the app-owned adapter may replace the underlying `/Ink` object while preserving the stable app `annotation_id` and `/NM`, complete path topology and Ink style. `xref` remains a generation-local locator, not identity.
+
+### Existing native Line (M23.1)
+
+Reuse `EditExternalAnnotation(MOVE)` and `DeleteExternalAnnotation`, the
+capability-driven native gesture, bounded native appearance cache and exact
+native history snapshots. Hit-test the canonical endpoints in viewport space
+with a screen-pixel tolerance. Mouse movement paints a rigid translated native
+appearance locally; release submits one mutation through A-06.
+
+The worker translates `/L` and `/Rect` in place, updating only `/M` otherwise.
+It never calls `Annot.update()` or replaces the Line/AP, so authored line
+endings, captions, resources, colors and metadata survive. The existing
+transaction restores the native dictionary on adapter or post-write adoption
+failure. Existing generation/revision/save barriers apply. The pinned
+`Annot.get_pixmap()` includes page rotation: Line appearance coverage is
+derotated to canonical coordinates while its pixels remain display-oriented.
+
+M23.1 explicitly authorizes this preserving translation independently of the
+historical M15.1 release registry; it does not add a fabricated Acrobat gate
+entry. Manual Acrobat Line interoperability remains a separate unrun gate.
 
 ### Highlight
 

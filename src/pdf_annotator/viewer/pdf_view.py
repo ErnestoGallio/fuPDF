@@ -2949,12 +2949,23 @@ class PdfView(QAbstractScrollArea):
                     or not summary.capabilities.selectable
                     or is_attached_reply(summary, self.session.annotation_inventory)):
                 continue
+            if summary.kind == "line" and len(summary.geometry.line) == 2:
+                if self._hit_test_native_line(summary, point):
+                    return summary.logical_id
+                continue
             rect = (note_icon_rect(self.coordinate_mapper(page_index), summary.geometry.bbox)
                     if summary.kind == "sticky_note" else
                     self._display_rect(page_index, summary.geometry.bbox).adjusted(-5, -5, 5, 5))
             if rect.contains(point):
                 return summary.logical_id
         return None
+
+    def _hit_test_native_line(self, summary: AnnotationSummary, point: QPointF) -> bool:
+        mapper = self.coordinate_mapper(summary.page_index)
+        a, b = (QPointF(*mapper.canonical_to_viewport((p.x, p.y))) for p in summary.geometry.line)
+        width = max(0.0, float(summary.style.get("border", {}).get("width", 1)))
+        tolerance = max(5.0, width * mapper.zoom / 2 + 3.0)
+        return self._screen_segment_distance_sq(point, a, b) <= tolerance ** 2
 
     def _hit_test_inventory_editorial(self, point: QPointF,
                                       page_index: int) -> AnnotationSummary | None:
@@ -3002,7 +3013,7 @@ class PdfView(QAbstractScrollArea):
             return fallback
         line = color(stroke, QColor(220, 68, 68, 210))
         surface = color(fill, QColor(255, 229, 76, 105))
-        if summary.kind in ("text_box", "callout"):
+        if summary.kind in ("text_box", "callout", "line"):
             native_clip = summary.geometry.text_rect if summary.kind == "callout" else None
             if native_clip is None:
                 native_painted = (self._paint_native_appearance(
@@ -3036,7 +3047,7 @@ class PdfView(QAbstractScrollArea):
                                                         summary.geometry.bbox).adjusted(-2, -2, 2, 2))
                     painter.restore()
                 return
-            if summary.provenance == "external" and summary.appearance_available:
+            if summary.provenance == "external" and (summary.appearance_available or summary.kind == "line"):
                 # An opaque external AP is authoritative. Never repaint it
                 # through the generic semantic FreeText path while its native
                 # raster is pending: that fallback is the transient red flash.
@@ -3318,8 +3329,9 @@ class PdfView(QAbstractScrollArea):
     def _appearance_targets(self) -> tuple[AnnotationSummary, ...]:
         pages = self.scheduler.visible + self.scheduler.nearby
         return tuple(summary for summary in self.session.annotation_inventory.values()
-                     if (summary.provenance == "external" and summary.kind in ("text_box", "callout")
-                         and summary.appearance_available and summary.page_index in pages))
+                     if (summary.provenance == "external" and summary.kind in ("text_box", "callout", "line")
+                         and (summary.appearance_available or summary.kind == "line")
+                         and summary.page_index in pages))
 
     def _tick_annotation_appearances(self) -> None:
         if self.scheduler.epoch != self._appearance_scheduler_epoch:

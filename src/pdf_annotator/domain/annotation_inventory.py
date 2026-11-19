@@ -48,6 +48,7 @@ class AnnotationGeometry:
     callout_line: tuple[PdfPoint, ...] = ()
     caret: tuple[PdfPoint, PdfPoint] | None = None
     text_rect: PdfRect | None = None
+    line: tuple[PdfPoint, ...] = ()
 
 
 @dataclass(frozen=True, slots=True)

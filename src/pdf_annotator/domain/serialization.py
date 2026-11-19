@@ -542,7 +542,8 @@ def _summary_to_payload(summary: AnnotationSummary) -> Payload:
                          "caret": ([point_to_payload(point) for point in geometry.caret]
                                    if geometry.caret is not None else None),
                          "text_rect": (rect_to_payload(geometry.text_rect)
-                                       if geometry.text_rect is not None else None)},
+                                       if geometry.text_rect is not None else None),
+                         "line": [point_to_payload(point) for point in geometry.line]},
             "preview": summary.preview, "author": summary.author, "modified": summary.modified,
             "created": summary.created, "style": summary.style,
             "capabilities": {name: getattr(summary.capabilities, name)
@@ -560,7 +561,7 @@ def _summary_from_payload(payload: Any) -> AnnotationSummary:
                   "modified", "created", "style", "capabilities", "component_xrefs",
                   "appearance_available", "provenance", "native_name", "reply", "reply_ids"}, "annotation summary")
     geometry = _dict(data["geometry"], "annotation summary geometry")
-    _exact(geometry, {"bbox", "quads", "paths", "callout_line", "caret", "text_rect"},
+    _exact(geometry, {"bbox", "quads", "paths", "callout_line", "caret", "text_rect", "line"},
            "annotation summary geometry")
     try:
         caret = (tuple(point_from_payload(point) for point in geometry["caret"])
@@ -576,7 +577,8 @@ def _summary_from_payload(payload: Any) -> AnnotationSummary:
                                tuple(point_from_payload(point) for point in geometry["callout_line"]),
                                caret,
                                rect_from_payload(geometry["text_rect"])
-                               if geometry["text_rect"] is not None else None),
+                               if geometry["text_rect"] is not None else None,
+                               tuple(point_from_payload(point) for point in geometry["line"])),
             str(data["preview"]), data["author"] if isinstance(data["author"], str) else None,
             data["modified"] if isinstance(data["modified"], str) else None,
             data["created"] if isinstance(data["created"], str) else None,

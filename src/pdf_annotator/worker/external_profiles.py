@@ -54,8 +54,11 @@ class ExternalProfile:
 
     def capabilities(self, *, deletable: bool = False) -> AnnotationCapabilities:
         from ..domain.external_edits import CAPABILITY_FOR_EDIT
+        # M23.1 explicitly enables rigid native Line translation. It preserves
+        # the authored AP and is not a claim of a passed Acrobat manual gate.
         permitted = {field: getattr(self.candidate, field) and
-                     (self.name, operation.value) in VERIFIED_EXTERNAL_EDITS
+                     ((self.name, operation.value) in VERIFIED_EXTERNAL_EDITS
+                      or (self.name == "line-translation-v1" and operation.value == "move"))
                      for operation, field in CAPABILITY_FOR_EDIT.items()}
         return AnnotationCapabilities(deletable=deletable, **permitted)
 
@@ -410,7 +413,7 @@ def inspect_profile(document: Any, page: Any, annot: Any) -> ExternalProfile:
     try:
         xref = annot.xref
         subtype = value(document, xref, "Subtype")
-        if subtype not in ("/FreeText", "/Ink"):
+        if subtype not in ("/FreeText", "/Ink", "/Line"):
             return denied("No M15.1 edit equivalent for this subtype")
         keys = set(document.xref_get_keys(xref))
         flags = int(value(document, xref, "F")) if "F" in keys else 0
@@ -431,6 +434,12 @@ def inspect_profile(document: Any, page: Any, annot: Any) -> ExternalProfile:
         rect = annot.rect
         if rect.is_empty or rect.is_infinite or not all(isfinite(item) for item in rect):
             return denied("Invalid non-finite native geometry")
+        if subtype == "/Line":
+            endpoints = numbers(document, xref, "L")
+            if len(endpoints) != 4 or endpoints[:2] == endpoints[2:]:
+                return denied("Invalid Line endpoints")
+            return ExternalProfile("line-translation-v1", AnnotationCapabilities(movable=True),
+                                   "M23.1 native L/Rect translation; authored appearance preserved")
         if subtype == "/Ink":
             paths = annot.vertices
             if not paths or any(len(path) < 2 for path in paths):

@@ -309,6 +309,42 @@ For each operation allowed by ANN-05 (create/delete; Ink move; TextBox move/resi
 
 **Pass:** untouched external annotations remain materially equivalent and are not normalized merely by opening/saving. External annotations that cannot be represented losslessly are read-only; missing/duplicate `/NM` does not cause identity collisions.
 
+### AT-LINE-01 — Existing native Line recognition and selection (M23.1)
+
+Use synthetic horizontal, vertical, diagonal and reversed `/Line` annotations,
+with native endpoints, thin/dashed strokes, line endings, metadata and optional
+popups; include missing AP, rotations 0/90/180/270 and nonzero CropBox offsets.
+Verify separate Line inventory/sidebar entries and read-only properties, exact
+native appearance coverage, and segment hit testing with screen-pixel tolerance.
+Clicks inside an empty diagonal bounding area must not select the Line. Ink
+and page-content lines remain distinct. No creation/endpoint/resize tools.
+
+### AT-LINE-02 — Native delete/history/persistence (M23.1)
+
+Delete through the ordinary selected-annotation command. Verify removal from
+viewer/inventory/sidebar and PDF, including an owned Popup. Undo/redo must
+restore/remove the exact graph, including after Save As followed by Save.
+Unsafe incoming relationships remain protected by the existing graph policy.
+
+### AT-LINE-03 — Rigid drag/history/preservation (M23.1)
+
+At 100/150/400/800%, all rotations and all layouts, drag a selected Line. Mouse
+moves send no mutation; release sends one external MOVE command/revision.
+Both endpoints receive the same canonical delta: length and inclination are
+unchanged. Save/Save As/reopen preserves native Line type, endpoints, style,
+endings, author, metadata and original AP streams/resources. Only `/L`, `/Rect`
+and `/M` may change. Undo/redo restores the exact native before/after state.
+Esc, a return to the press position, stale/duplicate commands and injected
+post-write failure leave no partial geometry or phantom successful history.
+
+### AT-LINE-04 — Manual Acrobat round trip (M23.1)
+
+NOT RUN until recorded with current Adobe Acrobat: author several Lines there
+(thin, dashed, decorated, with comments), open/select/move/delete in fuPDF,
+undo/redo, Save and Save As, reopen in both applications. Check endpoint
+positions, line endings, comments/author, native editability and an untouched
+Ink/editorial control. Automated PyMuPDF reopen is insufficient for this gate.
+
 ### AT-CMD-01 — Shared source-independent command/service path
 
 **Covers:** ANN-11, architecture A-06

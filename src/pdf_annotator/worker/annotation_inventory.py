@@ -252,7 +252,7 @@ class NativeAnnotationInventory:
         rich = self._pdf_string(xref, "RC")
         intent = _name(self._document, xref, "IT")
         kind = {
-            "Ink": "ink", "Highlight": "highlight", "FreeText": "text_box",
+            "Ink": "ink", "Line": "line", "Highlight": "highlight", "FreeText": "text_box",
             "StrikeOut": "delete_text", "Caret": "insert_text", "Text": "sticky_note",
             "Underline": "underline", "Squiggly": "squiggly",
         }.get(subtype, subtype.lower() or "unknown")
@@ -292,6 +292,9 @@ class NativeAnnotationInventory:
                 quads = tuple(PdfQuad(*member_vertices[index:index + 4])
                               for index in range(0, len(member_vertices) - 3, 4))
         callout = vertices if kind == "callout" and vertices else self._callout_points(xref)
+        if subtype == "Line":
+            # A Line is not a FreeText callout, even with an opaque /CL key.
+            callout = ()
         rect = _rect(annot.rect)
         caret = None
         if kind in ("insert_text", "replace_text"):
@@ -304,7 +307,8 @@ class NativeAnnotationInventory:
                            max(rect.x1, *(point.x for point in points)),
                            max(rect.y1, *(point.y for point in points)))
         text_rect = self._freetext_text_rect(annot, rect) if subtype == "FreeText" else None
-        geometry = AnnotationGeometry(rect, quads, paths, callout, caret, text_rect)
+        geometry = AnnotationGeometry(rect, quads, paths, callout, caret, text_rect,
+                                      vertices if subtype == "Line" and len(vertices) == 2 else ())
         colors = getattr(annot, "colors", {}) or {}
         raw_opacity = float(getattr(annot, "opacity", -1.0))
         # PyMuPDF intentionally reports -1 when /CA is absent, while PDF's
@@ -324,6 +328,8 @@ class NativeAnnotationInventory:
                  "fill": native_fill, "text": da_color or [],
                  "opacity": opacity,
                  "border": dict(getattr(annot, "border", {}) or {}), "intent": intent}
+        if subtype == "Line":
+            style["line_ends"] = list(annot.line_ends or ())
         logical_id = f"native:{page_index}:{xref}"
         components = tuple(sorted(set(members + self._popups(members))))
         detail = AnnotationDetail(logical_id, contents, rich, str(info.get("subject") or "") or None)
@@ -430,7 +436,8 @@ def summary_to_payload(summary: AnnotationSummary) -> dict[str, object]:
                                    if geometry.caret is not None else None),
                          "text_rect": ([geometry.text_rect.x0, geometry.text_rect.y0,
                                         geometry.text_rect.x1, geometry.text_rect.y1]
-                                       if geometry.text_rect is not None else None)},
+                                       if geometry.text_rect is not None else None),
+                         "line": [_point_payload(point) for point in geometry.line]},
             "preview": summary.preview, "author": summary.author, "modified": summary.modified,
             "created": summary.created, "style": summary.style,
             "capabilities": asdict(summary.capabilities),
@@ -463,7 +470,8 @@ def summary_from_payload(payload: dict[str, object]) -> AnnotationSummary:
                  if isinstance(text_rect_data, list) and len(text_rect_data) == 4 else None)
     geometry = AnnotationGeometry(PdfRect(*(float(value) for value in bbox)), quads, paths,
                                   tuple(point(value) for value in geometry_data.get("callout_line", [])),
-                                  caret, text_rect)
+                                  caret, text_rect,
+                                  tuple(point(value) for value in geometry_data.get("line", [])))
     capabilities = payload["capabilities"]
     if not isinstance(capabilities, dict):
         raise ValueError("Invalid inventory capabilities")

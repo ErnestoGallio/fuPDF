@@ -7,7 +7,7 @@ import re
 from ..domain.errors import DomainValidationError, MutationErrorCode
 from .editorial_adapter import _page_transaction
 
-_DELETABLE_SUBTYPES = frozenset(("FreeText", "Ink", "Highlight", "Text", "Underline",
+_DELETABLE_SUBTYPES = frozenset(("FreeText", "Ink", "Line", "Highlight", "Text", "Underline",
                                  "Squiggly", "StrikeOut", "Caret"))
 
 

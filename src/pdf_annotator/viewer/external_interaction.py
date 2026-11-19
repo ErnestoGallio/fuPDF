@@ -196,6 +196,9 @@ class ExternalInteraction:
         if summary is None or not self.view._display_rect(summary.page_index,
                 summary.geometry.bbox).adjusted(-8, -8, 8, 8).contains(point):
             return False
+        if (summary.kind == "line" and len(summary.geometry.line) == 2
+                and not self.view._hit_test_native_line(summary, point)):
+            return False
         action = self.action_at(summary, point)
         if action is None:
             return False
@@ -244,8 +247,8 @@ class ExternalInteraction:
             source = gesture.summary
             dx, dy = gesture.command.delta
             if not source.geometry.callout_line:
-                # FreeText has no separate leader geometry: its whole native
-                # appearance is a rigid translation.
+                # FreeText without a leader and native Line both translate
+                # their whole authored appearance rigidly.
                 origin = mapper.canonical_to_viewport((0, 0))
                 shifted = mapper.canonical_to_viewport((dx, dy))
                 painter.save()

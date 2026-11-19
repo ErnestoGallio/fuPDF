@@ -27,6 +27,7 @@ from .save_validation import _parse
 MUTATION_KEYS = {
     "translation": frozenset(("Rect", "M")),
     "ink": frozenset(("Rect", "InkList", "M")),
+    "line": frozenset(("Rect", "L", "M")),
     "box": frozenset(("Rect", "RD", "AP", "M")),
     "callout": frozenset(("Rect", "RD", "CL", "AP", "M")),
     "text": frozenset(("Contents", "RC", "AP", "M")),
@@ -406,9 +407,10 @@ def apply_external_edit(document: Any, command: EditExternalAnnotation, *,
     original_keys = _parse(original)
     transform = NativeCoordinates.observe(document, annot)
     rect = PdfRect(*annot.rect)
-    callout = value(document, root, "IT") == "/FreeTextCallout"
     ink = value(document, root, "Subtype") == "/Ink"
-    box = None if ink else text_box(document, annot, transform)
+    native_line = value(document, root, "Subtype") == "/Line"
+    callout = not native_line and value(document, root, "IT") == "/FreeTextCallout"
+    box = None if ink or native_line else text_box(document, annot, transform)
     source_has_border, source_border_width = native_border_style(document, annot)
     regenerate = False
     refresh_callout_parent = False
@@ -421,7 +423,11 @@ def apply_external_edit(document: Any, command: EditExternalAnnotation, *,
         if abs(dx) + abs(dy) < 1e-6:
             raise DomainValidationError(MutationErrorCode.INVALID_GEOMETRY)
         desired["Rect"] = array(transform.native_rect(moved))
-        allowed = MUTATION_KEYS["ink" if ink else "translation"]
+        allowed = MUTATION_KEYS["line" if native_line else "ink" if ink else "translation"]
+        if native_line:
+            endpoints = numbers(document, root, "L")
+            desired["L"] = array(v + (dx * transform.sx if i % 2 == 0 else -dy * transform.sy)
+                                 for i, v in enumerate(endpoints))
         if ink:
             paths = _parse(value(document, root, "InkList"))
             if not isinstance(paths, list) or any(not isinstance(path, list) or len(path) % 2 for path in paths):

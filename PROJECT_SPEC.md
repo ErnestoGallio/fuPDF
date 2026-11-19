@@ -317,6 +317,7 @@ The allowed operations are deliberately type-specific:
 | App-created Delete Text / Strikethrough | yes | yes | no | no | no |
 | App-created Insert Text | yes | yes | no | no | no (plain text entered at creation) |
 | App-created Replace Text | yes | yes | no | no | no (plain text entered at creation) |
+| Existing native Line (M23.1) | yes | safe native graph only | rigid drag translation | no | read-only properties |
 | External annotation not safely representable | yes/read-only | no | no | no | no |
 
 Additional rules:
@@ -343,6 +344,16 @@ Additional rules:
 - **App-created annotations and corrections** support exactly the operations listed in ANN-05.
 - Existing/external comments corresponding to the seven tools are editable only when the worker can map their properties and any associated objects to the app model without losing material appearance or correction semantics. Otherwise they are listed and shown as read-only.
 - Unsupported annotation types are read-only.
+- M23.1 recognizes existing native `/Line` separately from Ink and page graphics.
+  Its endpoints, color, width, line endings and metadata are available in the
+  inventory and existing sidebar detail. Safe native graphs can be deleted;
+  valid unlocked standalone Lines can be translated on their original page
+  through the existing external command path, with one undoable drag mutation.
+  Both endpoints move by the same canonical vector. Authored appearances,
+  style and metadata are preserved, apart from modification time. No Line
+  creation, resize, rotation or independent endpoint edit is exposed.
+  Malformed geometry and dependent/locked profiles retain conservative edit
+  restrictions. Acrobat interoperability still requires a manual round trip.
 - Never reconstruct or `update()` an untouched external annotation merely to normalize it.
 - App-created annotations receive an application-stable identity (e.g. a unique PDF annotation name `/NM`). External annotations with missing/duplicate names receive session identities only unless safely modified.
 

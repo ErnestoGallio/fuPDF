@@ -12,15 +12,45 @@ from PySide6.QtWidgets import (QDockWidget, QFrame, QHBoxLayout, QLabel, QListWi
 from .document_session import DocumentSession
 from .ui_chrome import COLORS
 from ..domain.results import HistoryDelta
-from ..domain.annotation_inventory import is_attached_reply
+from ..domain.annotation_inventory import AnnotationSummary, is_attached_reply
 
 
 _LABELS = {
-    "ink": "Penna", "highlight": "Evidenziazione", "text_box": "Riquadro testo",
+    "ink": "Penna", "line": "Linea", "highlight": "Evidenziazione", "text_box": "Riquadro testo",
     "callout": "Callout", "delete_text": "Elimina testo", "insert_text": "Inserisci testo",
     "replace_text": "Sostituisci testo", "sticky_note": "Nota", "underline": "Sottolineatura",
     "squiggly": "Sottolineatura ondulata", "strikeout": "Barrato",
 }
+
+_LINE_ENDS = ("Nessuna", "Quadrato", "Cerchio", "Rombo", "Freccia aperta",
+              "Freccia chiusa", "Barra", "Freccia aperta inversa",
+              "Freccia chiusa inversa", "Tratto obliquo")
+
+
+def _line_properties(summary: AnnotationSummary) -> str:
+    """Read-only properties in the existing detail card; no new edit controls."""
+    fields = []
+    if len(summary.geometry.line) == 2:
+        a, b = summary.geometry.line
+        fields.append(f"Estremi (pt): ({a.x:g}, {a.y:g}) → ({b.x:g}, {b.y:g})")
+    stroke = summary.style.get("stroke", [])
+    if stroke:
+        space = {1: "grigio", 3: "RGB", 4: "CMYK"}.get(len(stroke), "nativo")
+        fields.append(f"Colore ({space}): " + ", ".join(f"{value:g}" for value in stroke))
+    width = summary.style.get("border", {}).get("width", -1)
+    if width >= 0:
+        fields.append(f"Spessore: {width:g} pt")
+    ends = summary.style.get("line_ends", [])
+    if len(ends) == 2:
+        fields.append("Terminazioni: " + " → ".join(
+            _LINE_ENDS[end] if type(end) is int and 0 <= end < len(_LINE_ENDS) else str(end)
+            for end in ends))
+    if summary.created:
+        fields.append("Creato: " + summary.created)
+    if summary.modified:
+        fields.append("Modificato: " + summary.modified)
+    return "\n".join(fields)
+
 
 _REPLY_ISSUES = {
     "missing_parent": "riferimento mancante", "invalid_irt": "riferimento non valido",
@@ -357,6 +387,11 @@ class AnnotationSidebar(QDockWidget):
                 text += f"\n\n{number}. {author}\n{contents(reply_id)}"
         elif summary.reply is not None and summary.reply.status != "linked":
             text += "\n\nRisposta non associata: " + _REPLY_ISSUES.get(summary.reply.status, "riferimento non risolvibile")
+        if summary.kind == "line":
+            text += "\n\n" + _line_properties(summary)
+            detail = session.annotation_details.get(logical_id)
+            if detail is not None and detail.subject:
+                text += "\nOggetto: " + detail.subject
         # Avoid resetting the selection/scroll position when an unrelated read completes.
         if self.detail.toPlainText() != text:
             self.detail.setPlainText(text)

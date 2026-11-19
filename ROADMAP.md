@@ -620,3 +620,18 @@ approves GNU AGPLv3 and authorizes distribution of the branding. A later
 milestone will create the separate public GitHub repository and qualify the
 portable ZIP, including corresponding source, required notices and private
 vulnerability reporting.
+
+## M23.1 — Existing native Line annotations
+
+Recognize, select, delete and rigidly drag native `/Line` annotations, including
+externally authored ones. Reuse external inventory/capabilities, A-06 commands,
+local gesture previews, exact native undo/redo and production Save/Save As.
+Expose endpoints/style/metadata in the existing sidebar detail. Preserve `/AP`
+and every native key except translated `/L`, `/Rect` and modification time.
+
+No Line creation, resize, rotation or independent endpoint edit; no changes to
+release version, stable Windows bundle, review APIs or other creation tools.
+Run only targeted tests and `git diff --check` for this task, per explicit user
+instruction. Primary acceptance: AT-LINE-01..04, relevant AT-CMD-01,
+AT-ANN-10..12, AT-COORD-01/02 and AT-SAVE-01/02 portions. Stop after the report;
+manual Acrobat round-trip evidence must not be inferred from internal tests.
