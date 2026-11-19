@@ -389,7 +389,9 @@ def authorize(document, command: EditExternalAnnotation):
         raise DomainValidationError(MutationErrorCode.ANNOTATION_NOT_FOUND)
     annot = page.load_annot(root)
     profile = inspect_profile(document, page, annot)
-    if (not getattr(profile.capabilities(), CAPABILITY_FOR_EDIT[command.edit])
+    if ((command.edit == ExternalEditKind.COLOR and profile.name != "highlight-color-v1")
+            or (profile.name == "highlight-color-v1" and command.edit != ExternalEditKind.COLOR)
+            or not getattr(profile.capabilities(), CAPABILITY_FOR_EDIT[command.edit])
             or (command.style is not None and not profile.capabilities().editable_style)):
         raise DomainValidationError(MutationErrorCode.READ_ONLY_ANNOTATION)
     return page, annot, profile
@@ -400,6 +402,10 @@ def apply_external_edit(document: Any, command: EditExternalAnnotation, *,
     import pymupdf
 
     page, annot, profile = authorize(document, command)
+    if command.edit == ExternalEditKind.COLOR:
+        from .highlight_adapter import recolor_highlight
+        recolor_highlight(document, page, annot, command.color)
+        return
     root = annot.xref
     original = document.xref_object(root)
     rollback_snapshot = snapshot_native_annotation(

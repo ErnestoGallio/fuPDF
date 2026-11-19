@@ -365,6 +365,8 @@ def assert_external_graph_preserved(manager, source, target):
         profile = item.style.get("external_profile")
         expected = {field for operation, field in CAPABILITY_FOR_EDIT.items()
                     if (profile, operation.value) in VERIFIED_EXTERNAL_EDITS}
+        if profile == "highlight-color-v1":  # Explicit M23.2 color-only capability.
+            expected.add("editable_style")
         actual = {field for field in CAPABILITY_FOR_EDIT.values()
                   if getattr(item.capabilities, field)}
         assert actual == expected

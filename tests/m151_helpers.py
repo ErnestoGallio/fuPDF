@@ -351,6 +351,8 @@ def trace_imported_callout(path):
 
     results = []
     for edit in ExternalEditKind:
+        if edit == ExternalEditKind.COLOR:  # M23.2 color applies only to Highlight.
+            continue
         document = pymupdf.open(path)
         external_profiles.VERIFIED_EXTERNAL_EDITS = frozenset(
             ("callout-rich-v1", operation.value) for operation in ExternalEditKind)

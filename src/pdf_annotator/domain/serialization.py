@@ -289,7 +289,8 @@ def command_to_payload(command: AnnotationCommand) -> Payload:
                 "rect": rect_to_payload(command.rect) if command.rect else None,
                 "anchor": point_to_payload(command.anchor) if command.anchor else None,
                 "rich_text": rich_text_to_payload(command.rich_text) if command.rich_text else None,
-                "style": style_to_payload(command.style) if command.style else None}
+                "style": style_to_payload(command.style) if command.style else None,
+                **({"color": color_to_payload(command.color)} if command.color is not None else {})}
     if isinstance(command, DeleteAnnotation):
         return {**payload, "page_index": command.page_index}
     if isinstance(command, DeleteExternalAnnotation):
@@ -354,13 +355,14 @@ def command_from_payload(payload: Any) -> AnnotationCommand:
         annotation_id = AnnotationId(data["annotation_id"])
         if kind == CommandKind.EDIT_EXTERNAL_ANNOTATION:
             _exact(data, base | {"logical_id", "page_index", "edit", "delta", "rect", "anchor",
-                                 "rich_text", "style"}, "external edit")
+                                 "rich_text", "style"} | ({"color"} if data.get("edit") == "color" else set()), "external edit")
             return EditExternalAnnotation(context, annotation_id, data["logical_id"], data["page_index"],
                 ExternalEditKind(data["edit"]), tuple(data["delta"]) if data["delta"] is not None else None,
                 rect_from_payload(data["rect"]) if data["rect"] is not None else None,
                 point_from_payload(data["anchor"]) if data["anchor"] is not None else None,
                 rich_text_from_payload(data["rich_text"]) if data["rich_text"] is not None else None,
-                style_from_payload(data["style"]) if data["style"] is not None else None)
+                style_from_payload(data["style"]) if data["style"] is not None else None,
+                color_from_payload(data["color"]) if data.get("color") is not None else None)
         if kind == CommandKind.DELETE_ANNOTATION:
             _exact(data, base | {"page_index"}, "delete command")
             return DeleteAnnotation(context, annotation_id, data["page_index"])

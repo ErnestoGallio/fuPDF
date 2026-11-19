@@ -168,6 +168,7 @@ Tool-specific controls appear only when relevant. Do not permanently occupy the 
 Allowed controls:
 
 - pen color;
+- Highlight color (M23.2), using the compact contextual palette for creation and selection;
 - text-box fill color;
 - text-box border color;
 - text-box font family and size from a compact fixed control;
@@ -203,7 +204,14 @@ Minimum fill palette:
 
 Exact RGB values are implementation details but must be stable once chosen and must map correctly to PDF color values.
 
-Highlight uses a standard yellow color in v1.
+Highlight defaults to the existing yellow. M23.2 adds green, light blue, pink
+and purple presets, retained per document for the session. The contextual palette
+appears beside the existing Highlight action for a confirmed text selection,
+or beside a selected Highlight for recoloring. Custom native colors remain
+visible without preset substitution. Recoloring changes only native Highlight
+color and appearance, preserves geometry, opacity and unrelated metadata, and
+uses the existing command/history and Save/Save As paths. Locked or unsafe
+native profiles remain read-only; no other annotation type gains color editing.
 
 ---
 
@@ -311,12 +319,13 @@ The allowed operations are deliberately type-specific:
 | Annotation type | Select | Delete | Move | Resize | Edit text/colors/anchor |
 | --- | --- | --- | --- | --- | --- |
 | App-created Ink | yes | yes | yes (drag translation only) | no | no (color chosen at creation) |
-| App-created Highlight | yes | yes | no | no | no |
+| App-created Highlight | yes | yes | no | no | color only (M23.2) |
 | App-created Text box | yes | yes | yes, including same-document page transfer | yes | text + fill/border colors + font family/size |
 | App-created Callout | yes | yes | box + anchor | box | text + fill/border colors + anchor |
 | App-created Delete Text / Strikethrough | yes | yes | no | no | no |
 | App-created Insert Text | yes | yes | no | no | no (plain text entered at creation) |
 | App-created Replace Text | yes | yes | no | no | no (plain text entered at creation) |
+| Existing native Highlight (M23.2) | yes | safe native graph only | no | no | color only for safe unlocked profiles |
 | Existing native Line (M23.1) | yes | safe native graph only | rigid drag translation | no | read-only properties |
 | External annotation not safely representable | yes/read-only | no | no | no | no |
 

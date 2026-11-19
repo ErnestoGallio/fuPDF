@@ -46,6 +46,7 @@ class DocumentUIState:
     sidebar_expanded: bool = True
     pen_enabled: bool = False
     pen_color: str = "red"
+    highlight_color: str = "Giallo"
     text_box_enabled: bool = False
     callout_enabled: bool = False
     delete_text_enabled: bool = False

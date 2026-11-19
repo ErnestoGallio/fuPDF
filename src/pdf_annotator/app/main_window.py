@@ -10,7 +10,8 @@ from PySide6.QtWidgets import (QAbstractSpinBox, QFileDialog, QFrame, QHBoxLayou
                                QVBoxLayout, QWidget, QWidgetAction)
 
 from ..worker.protocol import ErrorInfo
-from ..domain.styles import (PEN_COLOR_PRESETS, TEXT_BOX_UI_FONT_FAMILIES,
+from ..domain.geometry import PdfRect
+from ..domain.styles import (PEN_COLOR_PRESETS, HIGHLIGHT_COLOR_PRESETS, RgbColor, TEXT_BOX_UI_FONT_FAMILIES,
                              TEXT_BOX_BORDER_PRESETS, TEXT_BOX_FILL_PRESETS)
 from ..viewer.pdf_view import PdfView
 from ..viewer.layout_engine import LayoutMode
@@ -508,6 +509,33 @@ class MainWindow(QMainWindow):
         pdf_layout.setSpacing(4)
         self.context_highlight_button = self._compact_action_button(
             self.highlight_action, self.pdf_text_bar, "highlight", "Evidenzia", "contextIconButton", 32)
+        pdf_layout.addWidget(self.context_highlight_button)
+        self.highlight_color_menu = QMenu(self.context_highlight_button)
+        self.highlight_color_menu.setStyleSheet("QMenu { padding: 2px; min-width: 0px; }")
+        self.highlight_color_actions = {}
+        for name, color in HIGHLIGHT_COLOR_PRESETS:
+            action = QAction(fill_swatch_icon(color), name, self.highlight_color_menu)
+            action.setCheckable(True)
+            action.triggered.connect(lambda checked=False, preset=name: self._choose_highlight_color(preset))
+            self.highlight_color_actions[name] = action
+            swatch = QToolButton(self.highlight_color_menu)
+            swatch.setDefaultAction(action)
+            swatch.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
+            swatch.setObjectName("colorControl")
+            swatch.setFixedSize(34, 34)
+            swatch.setIconSize(QSize(20, 20))
+            swatch.setToolTip(name)
+            swatch.setAccessibleName(name)
+            swatch.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+            action.triggered.connect(self.highlight_color_menu.hide)
+            row = QWidgetAction(self.highlight_color_menu)
+            row.setDefaultWidget(swatch)
+            self.highlight_color_menu.addAction(row)
+        self.context_highlight_button.setMenu(self.highlight_color_menu)
+        self.context_highlight_button.setPopupMode(QToolButton.ToolButtonPopupMode.MenuButtonPopup)
+        self.context_highlight_button.setFixedWidth(46)
+        self.context_highlight_button.setStyleSheet("max-width: 46px; min-width: 46px;")
+        self.context_highlight_button.setAccessibleName("Evidenzia; freccia per scegliere il colore")
         self.context_delete_button = QToolButton(self.pdf_text_bar)
         self.context_delete_button.setObjectName("contextIconButton")
         self.context_delete_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
@@ -524,7 +552,7 @@ class MainWindow(QMainWindow):
         self.context_replace_button.setText("Sostituisci testo")
         self.context_replace_button.setFixedSize(32, 32)
         self.context_replace_button.clicked.connect(self._replace_from_context)
-        for widget in (self.context_highlight_button, self.context_delete_button,
+        for widget in (self.context_delete_button,
                        self.context_replace_button):
             pdf_layout.addWidget(widget)
         self.pdf_text_bar.hide()
@@ -828,17 +856,41 @@ class MainWindow(QMainWindow):
             "text" if view.text_box_enabled or view.callout_enabled else None)
         object_context = self._selected_object_context(view)
         pdf_target = view.text_layer.confirmed
+        selected_highlight = self._selected_highlight(view)
 
         # One contextual subject at a time: run formatting wins over object
         # selection, then a creation preset, then the native PDF text target.
-        self.pdf_text_bar.setVisible(pdf_target is not None and not text_run_selected
+        self.pdf_text_bar.setVisible((pdf_target is not None or selected_highlight is not None) and not text_run_selected
                                      and creation_tool is None and object_context is None)
         if self.pdf_text_bar.isVisible():
             self.context_highlight_button.setEnabled(view.text_layer.highlight_ready
                                                      and view.pending_highlight_id is None)
             self.context_delete_button.setEnabled(True)
             self.context_replace_button.setEnabled(True)
-            self._place_for_pdf_target(self.pdf_text_bar, view, pdf_target)
+            editing_highlight = selected_highlight is not None
+            self.context_highlight_button.setVisible(True)
+            self.context_highlight_button.setEnabled(editing_highlight or view.text_layer.highlight_ready)
+            for control in (self.context_delete_button, self.context_replace_button):
+                control.setVisible(True)
+                control.setEnabled(not editing_highlight)
+            color = (selected_highlight[2] if editing_highlight else
+                     dict(HIGHLIGHT_COLOR_PRESETS)[view.session.ui.highlight_color])
+            matched = False
+            for name, preset in HIGHLIGHT_COLOR_PRESETS:
+                checked = color is not None and all(abs(a-b) < .0001 for a, b in zip(
+                    (color.red, color.green, color.blue), (preset.red, preset.green, preset.blue)))
+                self.highlight_color_actions[name].setChecked(checked)
+                self.highlight_color_actions[name].setEnabled(view.session.pending_mutations == 0)
+                matched |= checked
+            if color is not None:
+                self.context_highlight_button.setIcon(fill_swatch_icon(color))
+            self.context_highlight_button.setToolTip(
+                "Evidenzia — colore personalizzato" if editing_highlight and not matched else "Evidenzia — scegli colore dalla freccia")
+            if editing_highlight:
+                page, rect = selected_highlight[1]
+                self._place_context_bar(self.pdf_text_bar, self._canonical_to_tabs(view, page, rect.x0, rect.y0))
+            else:
+                self._place_for_pdf_target(self.pdf_text_bar, view, pdf_target)
 
         if text_run_selected:
             self._show_properties("Formato testo", text_only=True, anchor=self._editor_anchor(view))
@@ -856,6 +908,53 @@ class MainWindow(QMainWindow):
             self._show_properties(label, anchor=anchor)
         else:
             self.creation_properties.hide()
+
+    @staticmethod
+    def _selected_highlight(view: PdfView) -> tuple[str, tuple[int, PdfRect], RgbColor | None] | None:
+        model = view.session.annotations.get(view.selected_text_markup_id)
+        if model is not None and model.kind.value == "highlight" and model.backing is not None:
+            points = [p for q in model.target.quads for p in q.points]
+            rect = PdfRect(min(p.x for p in points), min(p.y for p in points),
+                           max(p.x for p in points), max(p.y for p in points))
+            return (f"native:{model.page_index}:{model.backing.xref}",
+                    (model.page_index, rect), model.style.color)
+        summary = view.session.annotation_inventory.get(view.selected_inventory_id)
+        if summary is not None and summary.kind == "highlight" and summary.capabilities.editable_style:
+            values = summary.style.get("stroke", [])
+            if len(values) == 3:
+                color = RgbColor(*values)
+            elif len(values) == 1:
+                color = RgbColor(*values * 3)
+            elif len(values) == 4:
+                c, m, y, k = values
+                color = RgbColor(1-min(1, c+k), 1-min(1, m+k), 1-min(1, y+k))
+            else:
+                color = None
+            return summary.logical_id, (summary.page_index, summary.geometry.bbox), color
+        return None
+
+    def _choose_highlight_color(self, name: str) -> None:
+        view = self._widgets.get(self.manager.active_id)
+        if view is None:
+            return
+        color = dict(HIGHLIGHT_COLOR_PRESETS)[name]
+        selected = self._selected_highlight(view)
+        view.session.ui.highlight_color = name
+        same_color = (selected is not None and selected[2] is not None and all(
+            abs(a-b) < .0001 for a, b in zip(
+                (selected[2].red, selected[2].green, selected[2].blue),
+                (color.red, color.green, color.blue))))
+        if selected is not None and not same_color and view.session.pending_mutations == 0:
+            from ..domain.annotation_commands import CommandContext
+            from ..domain.annotation_inventory import external_command_annotation_id
+            from ..domain.external_edits import EditExternalAnnotation, ExternalEditKind
+            logical_id, (page, _rect), _old = selected
+            command = EditExternalAnnotation(
+                CommandContext.create(view.session.document_id, view.session.document_generation),
+                external_command_annotation_id(logical_id), logical_id, page,
+                ExternalEditKind.COLOR, color=color)
+            self.manager.submit_annotation(command)
+        self._update_zoom_controls()
 
     def _sync_context_text_controls(self, view: PdfView) -> None:
         pen = dict(PEN_COLOR_PRESETS)[view.session.ui.pen_color]

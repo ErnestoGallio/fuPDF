@@ -56,10 +56,15 @@ class ExternalProfile:
         from ..domain.external_edits import CAPABILITY_FOR_EDIT
         # M23.1 explicitly enables rigid native Line translation. It preserves
         # the authored AP and is not a claim of a passed Acrobat manual gate.
+        # M23.2 explicitly authorizes color-only Highlight editing, independently
+        # of the Adobe manual gate. COLOR shares the existing style capability;
+        # omit its alias below so it cannot override another type's STYLE gate.
+        if self.name == "highlight-color-v1":
+            return AnnotationCapabilities(deletable=deletable, editable_style=True)
         permitted = {field: getattr(self.candidate, field) and
                      ((self.name, operation.value) in VERIFIED_EXTERNAL_EDITS
                       or (self.name == "line-translation-v1" and operation.value == "move"))
-                     for operation, field in CAPABILITY_FOR_EDIT.items()}
+                     for operation, field in CAPABILITY_FOR_EDIT.items() if operation.value != "color"}
         return AnnotationCapabilities(deletable=deletable, **permitted)
 
 
@@ -413,7 +418,7 @@ def inspect_profile(document: Any, page: Any, annot: Any) -> ExternalProfile:
     try:
         xref = annot.xref
         subtype = value(document, xref, "Subtype")
-        if subtype not in ("/FreeText", "/Ink", "/Line"):
+        if subtype not in ("/FreeText", "/Ink", "/Line", "/Highlight"):
             return denied("No M15.1 edit equivalent for this subtype")
         keys = set(document.xref_get_keys(xref))
         flags = int(value(document, xref, "F")) if "F" in keys else 0
@@ -434,6 +439,15 @@ def inspect_profile(document: Any, page: Any, annot: Any) -> ExternalProfile:
         rect = annot.rect
         if rect.is_empty or rect.is_infinite or not all(isfinite(item) for item in rect):
             return denied("Invalid non-finite native geometry")
+        if subtype == "/Highlight":
+            import pymupdf
+            quads = numbers(document, xref, "QuadPoints")
+            if not quads or len(quads) % 8 or not all(q.is_convex for q in
+                    (pymupdf.Quad(annot.vertices[i:i+4])
+                      for i in range(0, len(annot.vertices), 4))):
+                return denied("Invalid Highlight quads")
+            return ExternalProfile("highlight-color-v1", AnnotationCapabilities(editable_style=True),
+                                   "M23.2 native Highlight color; Acrobat manual gate pending")
         if subtype == "/Line":
             endpoints = numbers(document, xref, "L")
             if len(endpoints) != 4 or endpoints[:2] == endpoints[2:]:

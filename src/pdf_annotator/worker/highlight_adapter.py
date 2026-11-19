@@ -3,6 +3,7 @@
 import logging
 from typing import Any
 
+from ..domain.styles import RgbColor
 from ..domain.annotation_commands import AnnotationCommand, CreateHighlight, DeleteAnnotation
 from ..domain.annotation_models import AnnotationModel, AnnotationOwnership
 from ..domain.errors import DomainValidationError, MutationErrorCode
@@ -68,3 +69,44 @@ def delete_highlight(document: Any, command: DeleteAnnotation) -> AppliedMutatio
             page.delete_annot(annotation)
             return AppliedMutation()
     raise DomainValidationError(MutationErrorCode.ANNOTATION_NOT_FOUND)
+
+
+def recolor_highlight(document: Any, page: Any, annotation: Any, color: RgbColor) -> None:
+    """Change only /C and a fresh /AP; preserve all other authored native keys.
+
+    Detach the old AP before update so shared/imported streams and exact history
+    snapshots remain immutable. PyMuPDF owns the new native Highlight appearance.
+    """
+    from .external_delete import snapshot_native_annotation, restore_native_annotation
+    from .save_validation import _parse
+
+    root, page_index = annotation.xref, page.number
+    original = document.xref_object(root)
+    before = snapshot_native_annotation(document, (page_index,), (root,),
+                                        include_normal_appearance=True)
+    try:
+        document.xref_set_key(root, "AP", "null")
+        page = document.reload_page(page)
+        annotation = page.load_annot(root)
+        annotation.set_colors(stroke=(color.red, color.green, color.blue))
+        annotation.update()
+        appearance = document.xref_get_key(root, "AP")[1]
+        native_color = document.xref_get_key(root, "C")[1]
+        document.update_object(root, original)
+        document.xref_set_key(root, "C", native_color)
+        document.xref_set_key(root, "AP", appearance)
+        after = _parse(document.xref_object(root))
+        prior = _parse(original)
+        if any(prior.get(key) != after.get(key) for key in prior.keys() | after.keys()
+               if key not in ("/C", "/AP")):
+            raise RuntimeError("Highlight color exceeded native key allowlist")
+        document.reload_page(page)
+    except Exception:
+        current = snapshot_native_annotation(document, (page_index,), (root,),
+                                             include_normal_appearance=True)
+        try:
+            restore_native_annotation(document, before, current)
+        except Exception as rollback_error:
+            document.close()
+            raise RuntimeError("Highlight color rollback failed; document closed") from rollback_error
+        raise

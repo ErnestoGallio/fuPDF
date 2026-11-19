@@ -19,7 +19,7 @@ from ..domain.annotation_commands import (COMMAND_TYPES, AnnotationCommand,
                                            MoveCalloutAnchor, TransferCallout, UpdateCallout,
                                            command_annotation_id)
 from ..domain.annotation_models import AnnotationOwnership
-from ..domain.external_edits import EditExternalAnnotation, CAPABILITY_FOR_EDIT
+from ..domain.external_edits import EditExternalAnnotation, ExternalEditKind, CAPABILITY_FOR_EDIT
 from ..domain.errors import (DomainValidationError, MutationError,
                              MutationErrorCode)
 from ..domain.geometry import PageBounds
@@ -79,7 +79,12 @@ class AnnotationService:
         try:
             if isinstance(command, EditExternalAnnotation):
                 summary = session.annotation_inventory.get(command.logical_id)
-                if (summary is None or summary.page_index != command.page_index
+                owned_highlight = (command.edit == ExternalEditKind.COLOR and any(
+                    model.kind == AnnotationKind.HIGHLIGHT and model.backing is not None
+                    and f"native:{model.page_index}:{model.backing.xref}" == command.logical_id
+                    for model in session.annotations.values()))
+                if not owned_highlight and (summary is None or summary.page_index != command.page_index
+                        or (command.edit == ExternalEditKind.COLOR and summary.kind != "highlight")
                         or not getattr(summary.capabilities, CAPABILITY_FOR_EDIT[command.edit])
                         or (command.style is not None and not summary.capabilities.editable_style)):
                     raise DomainValidationError(MutationErrorCode.READ_ONLY_ANNOTATION)

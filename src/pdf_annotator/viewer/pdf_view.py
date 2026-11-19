@@ -33,7 +33,7 @@ from ..domain.rich_text import (RichText, RichTextFormatDelta, RichTextRun,
 from ..domain.results import MutationResult
 from ..domain.styles import (PEN_COLOR_PRESETS, TEXT_BOX_BORDER_PRESETS,
                              TEXT_BOX_FILL_PRESETS, FREE_TEXT_FONT_FAMILIES,
-                             FreeTextStyle, HighlightStyle, InkStyle, RgbColor)
+                             FreeTextStyle, HighlightStyle, InkStyle, RgbColor, HIGHLIGHT_COLOR_PRESETS)
 from .sticky_notes import StickyNoteReader, note_icon_rect, paint_note_icon
 
 # These are application-private files, never Windows aliases. RichText keeps
@@ -1033,7 +1033,8 @@ class PdfView(QAbstractScrollArea):
         command = CreateHighlight(
             CommandContext.create(self.session.document_id,
                                   self.session.document_generation,
-                                  CommandSource.UI), target, HighlightStyle())
+                                  CommandSource.UI), target,
+            HighlightStyle(dict(HIGHLIGHT_COLOR_PRESETS)[self.session.ui.highlight_color]))
         self.pending_highlight_id = command.context.command_id
         self.selection_changed.emit()
         self.highlight_requested.emit(command)
@@ -3013,6 +3014,15 @@ class PdfView(QAbstractScrollArea):
             return fallback
         line = color(stroke, QColor(220, 68, 68, 210))
         surface = color(fill, QColor(255, 229, 76, 105))
+        if summary.kind == "highlight":
+            values = stroke or []
+            if len(values) == 1:
+                values = values * 3
+            elif len(values) == 4:
+                c, m, y, k = values
+                values = [1-min(1, c+k), 1-min(1, m+k), 1-min(1, y+k)]
+            if len(values) == 3:
+                surface = QColor.fromRgbF(*values, max(0.0, min(1.0, float(opacity))))
         if summary.kind in ("text_box", "callout", "line"):
             native_clip = summary.geometry.text_rect if summary.kind == "callout" else None
             if native_clip is None:

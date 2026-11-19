@@ -24,6 +24,14 @@ class RgbColor:
 BLACK = RgbColor(0, 0, 0)
 YELLOW = RgbColor(1, .92, 0)
 
+HIGHLIGHT_COLOR_PRESETS = (
+    ("Giallo", YELLOW),
+    ("Verde", RgbColor(.35, 1, .35)),
+    ("Azzurro", RgbColor(.25, .80, 1)),
+    ("Rosa", RgbColor(1, .45, .70)),
+    ("Viola", RgbColor(.70, .45, 1)),
+)
+
 PEN_COLOR_PRESETS = (
     ("black", RgbColor(0, 0, 0)),
     ("red", RgbColor(.86, .12, .12)),

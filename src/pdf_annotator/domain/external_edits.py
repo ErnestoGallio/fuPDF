@@ -12,7 +12,7 @@ from .geometry import PdfPoint, PdfRect
 from .identifiers import AnnotationId
 from .kinds import CommandKind
 from .rich_text import RichText
-from .styles import FreeTextStyle
+from .styles import FreeTextStyle, RgbColor
 
 
 class ExternalEditKind(str, Enum):
@@ -21,12 +21,13 @@ class ExternalEditKind(str, Enum):
     ANCHOR = "anchor"
     TEXT = "text"
     STYLE = "style"
+    COLOR = "color"
 
 
 CAPABILITY_FOR_EDIT = {
     ExternalEditKind.MOVE: "movable", ExternalEditKind.RESIZE: "resizable",
     ExternalEditKind.ANCHOR: "movable_anchor", ExternalEditKind.TEXT: "editable_text",
-    ExternalEditKind.STYLE: "editable_style",
+    ExternalEditKind.STYLE: "editable_style", ExternalEditKind.COLOR: "editable_style",
 }
 
 
@@ -43,6 +44,7 @@ class EditExternalAnnotation:
     anchor: PdfPoint | None = None
     rich_text: RichText | None = None
     style: FreeTextStyle | None = None
+    color: RgbColor | None = None
 
     def __post_init__(self) -> None:
         from .annotation_commands import CommandContext
@@ -56,7 +58,7 @@ class EditExternalAnnotation:
                 or not parts[2].isdigit() or int(parts[2]) < 1
                 or self.annotation_id != external_command_annotation_id(self.logical_id)):
             raise ValueError("Invalid external identity")
-        fields = (self.delta, self.rect, self.anchor, self.rich_text, self.style)
+        fields = (self.delta, self.rect, self.anchor, self.rich_text, self.style, self.color)
         selected = list(ExternalEditKind).index(self.edit)
         if any((value is not None) != (index == selected) for index, value in enumerate(fields)
                if not (self.edit == ExternalEditKind.TEXT and index == 4)):
@@ -66,6 +68,6 @@ class EditExternalAnnotation:
                 or self.delta == (0, 0)):
             raise ValueError("Invalid external translation")
         for value, expected in ((self.rect, PdfRect), (self.anchor, PdfPoint),
-                                (self.rich_text, RichText), (self.style, FreeTextStyle)):
+                                (self.rich_text, RichText), (self.style, FreeTextStyle), (self.color, RgbColor)):
             if value is not None and not isinstance(value, expected):
                 raise ValueError("Invalid external edit value")

@@ -505,7 +505,8 @@ def test_imported_callout_callout_cr_normalization_is_native_and_reversible(
     source = imported_source
     original = find_native(helper("inspect", source), CALLOUT, CALLOUT_PAGE)
     trace = {item["command_type"]: item for item in helper("trace_imported_callout", source)}
-    assert set(trace) == {operation.value for operation in ExternalEditKind}
+    assert set(trace) == {operation.value for operation in ExternalEditKind
+                          if operation != ExternalEditKind.COLOR}
     for operation in trace.values():
         assert operation["page_index"] == CALLOUT_PAGE and operation["xref"] == original["xref"]
         assert operation["exception_type"] is None, operation["traceback"]

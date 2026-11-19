@@ -635,3 +635,19 @@ Run only targeted tests and `git diff --check` for this task, per explicit user
 instruction. Primary acceptance: AT-LINE-01..04, relevant AT-CMD-01,
 AT-ANN-10..12, AT-COORD-01/02 and AT-SAVE-01/02 portions. Stop after the report;
 manual Acrobat round-trip evidence must not be inferred from internal tests.
+
+
+## M23.2 — Highlight colors
+
+Add five compact contextual Highlight presets (yellow default, green, light
+blue, pink, purple), retained for subsequent selections in the document session.
+Recolor selected app/external native Highlights through A-06, preserving native
+quads, geometry, opacity and all unrelated metadata. Exact native history and
+production Save/Save As remain authoritative. Custom colors are shown without
+normalization; locked/unsafe profiles stay read-only. No changes to Ink/Line,
+review APIs, release version or Windows bundle.
+
+Primary acceptance: AT-HLC-01..04, AT-ANN-05/06/10..12, AT-CMD-01 and relevant
+AT-SAVE-01/02 portions. Only targeted tests and git diff --check are run per
+explicit instruction. Manual Acrobat round-trip is NOT RUN until recorded by
+the owner; implementation is authorized independently of that manual gate.

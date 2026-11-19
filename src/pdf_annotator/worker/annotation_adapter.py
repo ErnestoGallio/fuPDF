@@ -31,7 +31,7 @@ from .external_delete import (ExternalDeleteSnapshot, NativeAnnotationSnapshot,
                               restore_native_annotation, snapshot_external_annotation,
                               snapshot_native_annotation)
 from .annotation_inventory import NativeAnnotationInventory
-from ..domain.external_edits import EditExternalAnnotation
+from ..domain.external_edits import EditExternalAnnotation, ExternalEditKind
 from .external_edit_adapter import apply_external_edit, authorize
 from .sticky_note_adapter import create_sticky_note
 
@@ -147,11 +147,23 @@ class ProductAnnotationAdapter:
             return ()
         return NativeAnnotationInventory(document).group_summaries(logical_id)
 
+    def _highlight_model(self, page_index: int, root: int) -> AnnotationModel | None:
+        # Native /NM may be duplicated in imported PDFs. Match the backing
+        # locator as well, so recoloring a namesake cannot update another DTO.
+        return next((model for model in self._owned.values()
+                     if model.kind == AnnotationKind.HIGHLIGHT and model.page_index == page_index
+                     and model.backing is not None and model.backing.xref == root), None)
+
     def __call__(self, document: Any, command: AnnotationCommand) -> AppliedMutation:
         if isinstance(command, EditExternalAnnotation):
             apply_external_edit(document, command)
             summary = NativeAnnotationInventory(document).summary_for_edit(command.logical_id)
-            return AppliedMutation(history_delta=HistoryDelta(inventory_updated=(summary,),
+            model = self._highlight_model(command.page_index, int(command.logical_id.rsplit(":", 1)[1])) if command.edit == ExternalEditKind.COLOR else None
+            if model is not None:
+                model = replace(model, style=replace(model.style, color=command.color))
+                self._owned[model.annotation_id.value] = model
+            return AppliedMutation(annotation=model, history_delta=HistoryDelta(
+                updated=(model,) if model else (), inventory_updated=(summary,),
                 appearance_invalidated_ids=(summary.logical_id,)))
         if isinstance(command, (CreateDeleteText, CreateInsertText, CreateReplaceText)):
             applied = create_editorial(document, command, self._text_service)
@@ -265,7 +277,8 @@ class ProductAnnotationAdapter:
     def history_before(self, document: Any, command: AnnotationCommand) -> ProductHistoryEntry:
         if isinstance(command, EditExternalAnnotation):
             _page, annot, _profile = authorize(document, command)
-            return ProductHistoryEntry(None, None,
+            model = self._highlight_model(command.page_index, annot.xref) if command.edit == ExternalEditKind.COLOR else None
+            return ProductHistoryEntry(model, None,
                 before_native=snapshot_native_annotation(
                     document, (command.page_index,), (annot.xref,), include_normal_appearance=True),
                 external_edit_before=NativeAnnotationInventory(document).summary_for_edit(command.logical_id))
@@ -296,7 +309,7 @@ class ProductAnnotationAdapter:
             # it as a newly-created object and nulls it.
             prior_components = tuple(xref for xref, _source
                                      in before.before_native.component_sources)
-            return replace(before, external_edit_after=summary,
+            return replace(before, after=applied.annotation, external_edit_after=summary,
                 after_native=snapshot_native_annotation(document, (summary.page_index,),
                     (int(summary.logical_id.rsplit(":", 1)[1]), *prior_components),
                     include_normal_appearance=True))
@@ -328,7 +341,9 @@ class ProductAnnotationAdapter:
     def undo_history(self, document: Any, entry: ProductHistoryEntry) -> AnnotationModel | None:
         if entry.external_edit_before is not None:
             restore_native_annotation(document, entry.before_native, entry.after_native)
-            return None
+            if entry.before is not None:
+                self._owned[entry.before.annotation_id.value] = entry.before
+            return entry.before
         if entry.external is not None:
             restore_external_annotation(document, entry.external)
             return None
@@ -338,7 +353,9 @@ class ProductAnnotationAdapter:
     def redo_history(self, document: Any, entry: ProductHistoryEntry) -> AnnotationModel | None:
         if entry.external_edit_before is not None:
             restore_native_annotation(document, entry.after_native, entry.before_native)
-            return None
+            if entry.after is not None:
+                self._owned[entry.after.annotation_id.value] = entry.after
+            return entry.after
         if entry.external is not None:
             delete_external_annotation(document, entry.external.logical_id)
             return None
@@ -350,7 +367,8 @@ class ProductAnnotationAdapter:
         """Return the one logical object affected by this exact native restore."""
         if entry.external_edit_before is not None:
             summary = entry.external_edit_before if undo else entry.external_edit_after
-            return HistoryDelta(inventory_updated=(summary,),
+            model = entry.before if undo else entry.after
+            return HistoryDelta(updated=(model,) if model else (), inventory_updated=(summary,),
                                 appearance_invalidated_ids=(summary.logical_id,))
         if entry.external is not None:
             if entry.external_summary is None:

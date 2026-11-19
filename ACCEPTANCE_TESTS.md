@@ -998,3 +998,40 @@ Required before v1 completion:
 - [ ] AT-INDESIGN-04 round trips pass on unchanged source/export fixtures
 - [ ] Final editorial interoperability gates repeated on interactive tools and production Save/Save As
 - [ ] No out-of-scope feature introduced
+
+
+## M23.2 — Highlight colors
+
+### AT-HLC-01 — Creation palette
+
+Select PDF text using the current interaction. Choose each of the five presets
+beside Highlight, create, repeat, and switch document tabs. The chosen preset
+is visibly checked, persists for the document session, and leaves the confirmed
+text target unchanged. The native annotation is Highlight with the chosen RGB.
+
+### AT-HLC-02 — Native recoloring and history
+
+Select an app-created and an imported Highlight. Recolor with the same palette;
+the overlay updates immediately. Undo/redo restores the exact native states.
+Preserve QuadPoints, Rect, author, Unicode content, opacity, dates, popup/reply
+relationships and unknown native keys. Change only /C and the new /AP; never
+mutate shared original appearance streams. Other subtypes and locked/unsafe
+profiles reject the color command in both service and worker.
+
+### AT-HLC-03 — Persistence and preservation
+
+Exercise production Save and Save As, reopen and compare native color,
+geometry, metadata and unrelated Ink/Line/editorial annotations. History must
+remain correct across the Save As generation barrier. Cover rotated CropBox
+pages, missing/shared appearances and original custom RGB colors. Selecting a
+custom color displays its swatch without selecting or applying a preset.
+
+### AT-HLC-04 — Manual Acrobat round-trip
+
+In Acrobat, create colored Highlights with opacity, author and comment text;
+include a custom color and a multiline range. Open in fuPDF, recolor, undo/redo,
+Save and Save As. Reopen both results in Acrobat: verify editable native
+Highlight, exact quads, opacity, author, content and other comments. Save from
+Acrobat and reopen in fuPDF. This is a separate manual gate: synthetic fixtures
+and PyMuPDF reopening do not establish Acrobat interoperability. NOT RUN until
+manual evidence is recorded.
