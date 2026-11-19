@@ -297,6 +297,9 @@ def run_document_worker(conn: Any, document_id: str, source: DocumentSource, *,
                 elif request.operation == Operation.ANNOTATION_DETAIL and annotation_inventory is not None:
                     payload = annotation_inventory.detail(request.payload.get("logical_id"),
                                                           request.payload.get("offset", 0))
+                elif request.operation == Operation.STRUCTURED_TEXT_PAGE and text_service is not None:
+                    from .structured_text import export_page
+                    payload = export_page(text_service, dispatcher.document_revision, request.payload)
                 elif request.operation == Operation.TEXT_PAGE_INDEX and text_service is not None:
                     index = text_service.page_index(request.payload.get("page_index"))
                     payload = {"page_text": text_page_index_to_payload(index),

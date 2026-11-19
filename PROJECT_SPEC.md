@@ -94,6 +94,23 @@ File, bound to the selected document. The user can choose a registered
 editorial profile, physical pages and optional editorial context. Windows
 Credential Manager stores the API key for the current user.
 
+### M24.1b linear text extraction
+
+On-demand text export contains exclusively {"pages":[{"page":1,"text":"..."}]}.
+Use native get_text("text", sort=False) with the existing content-only
+base_textpage, replacing line breaks with spaces while preserving internal
+spacing and all other text. Keep empty physical pages as empty strings.
+No paragraphs, ordering heuristics, geometry, IDs, hashes, diagnostics or
+batches in the exported JSON. Future review can consume pages directly and
+reuse multimodal passage/context localization. No M24.2 or API calls here.
+
+M24.1c adds one M24-only deterministic normalization before line flattening:
+an alphabetic character followed by ASCII hyphen, one line break and another
+alphabetic character is rejoined, consuming adjacent spaces/tabs. Inline
+hyphens, numeric/symbol boundaries and other spacing remain unchanged. No
+paragraph, dictionary, geometry or native extraction/localization change.
+A genuine compound at a line boundary is subject to the same lexical rule.
+
 ### 3.1 PyMuPDF concurrency rule
 
 PyMuPDF must **never be used concurrently from multiple threads within the same worker/document context**. PyMuPDF objects must not be shared across threads or processes.

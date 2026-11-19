@@ -292,6 +292,24 @@ or unverifiable group leaves an uncertain intent and prevents automatic replay.
 
 Each worker executes short jobs from its own priority-aware queue.
 
+### M24.1b linear text extraction
+
+The document worker extracts one page at a time with content-only base_textpage,
+locally binds its TextPage to the page for get_text("text", sort=False), and
+replaces line breaks with spaces without compressing other spacing. No RAWDICT,
+paragraph reconstruction or geometric ordering is used by M24. Export only
+pages with physical page/text; retain empty pages. Identity/revision checks,
+private-file size/hash verification, bounded IPC and atomic asynchronous
+streaming remain internal. Limits fail the export instead of dropping text.
+The obsolete paragraph DTOs, extraction IDs and text batch subsystem are
+removed. Future M24.2 can consume PageText through StructuredTextWorker.page;
+no new batching interface is needed. Existing multimodal localization,
+snapshot/live reconfirmation and A-06 remain unchanged.
+
+M24.1c uses domain.structured_text.normalize_page_text only from the M24
+worker adapter: alphabetic line-end hyphens are joined before existing line
+flattening. Native flags, base_textpage and multimodal matching stay unchanged.
+
 ### 5.1 Intra-document priority classes
 
 1. `VISIBLE_RENDER` — current visible page(s)

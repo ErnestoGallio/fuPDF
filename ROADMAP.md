@@ -651,3 +651,21 @@ Primary acceptance: AT-HLC-01..04, AT-ANN-05/06/10..12, AT-CMD-01 and relevant
 AT-SAVE-01/02 portions. Only targeted tests and git diff --check are run per
 explicit instruction. Manual Acrobat round-trip is NOT RUN until recorded by
 the owner; implementation is authorized independently of that manual gate.
+
+## M24.1b — Native linear text export
+
+Replace M24 paragraph reconstruction with native per-page sort=False text via
+base_textpage. Export only pages/page/text, preserving internal spaces and
+empty physical pages, replacing CR/LF with spaces. Remove obsolete paragraph
+DTOs and batch infrastructure; retain existing worker/IPC/revision and atomic
+background export. M24.2 can consume pages and reuse multimodal localization.
+Target AT-TEXT-01..06; only targeted tests and git diff --check. No full suite,
+API calls, build, commit or push.
+
+## M24.1c — Deterministic line-end joining
+
+Add only M24 alphabetic hyphen/line-break normalization before flattening.
+Keep native sort=False extraction, JSON and multimodal localization unchanged.
+Target AT-TEXT-07 and relevant AT-TEXT-01..06 regressions. Audit the two local
+proofs, compounds, numeric/operator boundaries and C++ listings. Only targeted
+tests and git diff --check; no full suite, APIs, build, commit or push.

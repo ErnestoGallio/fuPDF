@@ -155,10 +155,13 @@ class WorkerClient:
                 if (self._review_paused or not isinstance(self.fixture, DocumentSource)
                         or self._review_request_id is not None
                         or (operation in (Operation.REVIEW_EXTRACT, Operation.REVIEW_LOCALIZE,
-                                          Operation.REVIEW_CONFIRM) and self._records)):
+                                          Operation.REVIEW_CONFIRM, Operation.STRUCTURED_TEXT_PAGE,
+                                          ) and self._records)):
                     return None
                 if operation == Operation.REVIEW_SNAPSHOT and payload:
                     raise ValueError("Snapshot workspace is assigned by the transport")
+                if operation == Operation.STRUCTURED_TEXT_PAGE and payload and "workspace" in payload:
+                    raise ValueError("Text workspace is assigned by the transport")
             request_id = self._next_id + 1
             request = Request(self.document_id, self.generation, request_id, operation, payload or {})
             request = decode(encode(request))  # snapshot mutable input at submission
@@ -302,7 +305,7 @@ class WorkerClient:
                     continue
                 active_request_id = request.request_id
                 self.active_request_id = request.request_id
-                if request.operation == Operation.REVIEW_SNAPSHOT:
+                if request.operation in (Operation.REVIEW_SNAPSHOT, Operation.STRUCTURED_TEXT_PAGE):
                     if review_workspace is None:
                         try:
                             review_workspace = TemporaryDirectory(prefix="fupdf-review-", ignore_cleanup_errors=True)
@@ -312,7 +315,7 @@ class WorkerClient:
                                     "REVIEW_SNAPSHOT_FAILED", "Directory temporanea della revisione non disponibile.")))
                             active_request_id = self.active_request_id = None
                             continue
-                    request = replace(request, payload={"workspace": review_workspace.name})
+                    request = replace(request, payload={**request.payload, "workspace": review_workspace.name})
                 response = self._exchange(parent, process, request)
                 self.completed_counts[request.operation] += 1
                 if self._closing.is_set():

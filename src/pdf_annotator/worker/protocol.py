@@ -46,6 +46,7 @@ class Operation(str, Enum):
     TEXT_SELECTION = "text_selection"
     TEXT_INSERTION = "text_insertion"
     TEXT_TRIM = "text_trim"
+    STRUCTURED_TEXT_PAGE = "structured_text_page"
     SEARCH_SLICE = "search_slice"
     REVIEW_SNAPSHOT = "review_snapshot"
     REVIEW_EXTRACT = "review_extract"
@@ -64,7 +65,8 @@ class Operation(str, Enum):
 
 REVIEW_OPERATIONS = (Operation.REVIEW_SNAPSHOT, Operation.REVIEW_EXTRACT,
                      Operation.REVIEW_RELEASE_EXTRACT, Operation.REVIEW_RELEASE,
-                     Operation.REVIEW_LOCALIZE, Operation.REVIEW_CONFIRM, Operation.REVIEW_LOOKUP)
+                     Operation.REVIEW_LOCALIZE, Operation.REVIEW_CONFIRM, Operation.REVIEW_LOOKUP,
+                     Operation.STRUCTURED_TEXT_PAGE)
 
 
 @dataclass(frozen=True)

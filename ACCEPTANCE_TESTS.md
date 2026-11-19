@@ -1000,6 +1000,29 @@ Required before v1 completion:
 - [ ] No out-of-scope feature introduced
 
 
+## M24.1b — Native linear text extraction
+
+AT-TEXT-01: match native sort=False text per physical page; replace line breaks
+with spaces, preserve internal spacing, Unicode and hyphens, exclude comments.
+AT-TEXT-02: reuse existing multimodal localization; ambiguous text is rejected.
+AT-TEXT-03: export exactly pages/page/text, with no extra fields or CR/LF.
+AT-TEXT-04: retain empty pages and their physical numbering; no batch duplicates.
+AT-TEXT-05: bounded IPC/private files, stale identity/revision rejection,
+background atomic export, tab binding, Save As invalidation and close cleanup.
+AT-TEXT-06: targeted shared multimodal/selection regressions. When available,
+check all 44 pages of the owner's proof, including order on page 25 and
+expressive characters/spaces on pages 21–24. Manual Adobe gates remain NOT RUN.
+
+### AT-TEXT-07 — M24 deterministic line-end dehyphenation
+
+Test letters around an ASCII hyphen/line break with optional adjacent spaces
+or tabs, Unicode letters, CRLF and successive joins. Preserve inline compounds,
+numeric/operator/symbol boundaries and other spacing. Characterize genuine
+compounds split at a line end as inherently ambiguous under this rule.
+On the local school proof audit all 55 changes and the C++ listings; localize
+analizzare/riguardano/chiamante with the existing multimodal matcher. Compare
+all 44 novel pages with M24.1b, including expressive pages 21–24 and page 25.
+
 ## M23.2 — Highlight colors
 
 ### AT-HLC-01 — Creation palette

@@ -19,6 +19,7 @@ from .document_manager import DocumentManager
 from .document_session import Lifecycle
 from .review_controller import ReviewController
 from .review_dialog import ReviewDialog
+from .text_export import TextExportController
 from .annotation_sidebar import AnnotationSidebar
 from .canonical_fonts import ensure_canonical_editor_fonts
 from .branding import APPLICATION_NAME, ICON_PATH
@@ -75,6 +76,7 @@ class MainWindow(QMainWindow):
         self.resize(760, 460)
         self.manager = DocumentManager(self)
         self.reviews = ReviewController(self.manager, self)
+        self.text_exports = TextExportController(self.manager, self)
         self.review_dialog: ReviewDialog | None = None
         self.tabs = QTabWidget(self)
         self.tabs.setObjectName("documentTabs")
@@ -105,6 +107,7 @@ class MainWindow(QMainWindow):
         self._widgets: dict[str, PdfView] = {}
         self.file_dialog: QFileDialog | None = None
         self.save_dialog: QFileDialog | None = None
+        self.text_export_dialog: QFileDialog | None = None
         self._close_after_save: set[str] = set()
         self._closing_application = False
         self.open_action = QAction("Apri…", self)
@@ -123,6 +126,13 @@ class MainWindow(QMainWindow):
         self.review_action = QAction("Revisione con IA…", self)
         self.review_action.triggered.connect(lambda: self._open_review(self.manager.active_id))
         self.file_menu.addAction(self.review_action)
+        self.export_text_action = QAction("Esporta testo strutturato…", self)
+        self.export_text_action.triggered.connect(self._choose_text_export)
+        self.file_menu.addAction(self.export_text_action)
+        self.text_exports.changed.connect(self._update_zoom_controls)
+        self.text_exports.finished.connect(lambda _document, path: self.statusBar().showMessage(
+            f"Testo strutturato esportato: {path}", 12000))
+        self.text_exports.failed.connect(self.manager.error_occurred.emit)
         self.edit_menu = self.chrome_menu_bar.addMenu("Modifica")
         self.undo_action = QAction("Annulla", self)
         self.undo_action.setShortcuts([QKeySequence("Ctrl+Z")])
@@ -775,6 +785,10 @@ class MainWindow(QMainWindow):
         enabled = (view is not None and view.session.lifecycle == Lifecycle.READY
                    and not view.session.saving)
         self.save_action.setEnabled(enabled)
+        self.export_text_action.setEnabled(enabled and not self.text_exports.busy
+                                          and self.text_export_dialog is None
+                                          and not view.session.pending_mutations
+                                          and not self.manager.shutting_down)
         self.review_action.setEnabled(view is not None and view.session.lifecycle == Lifecycle.READY
                                       and not self.manager.shutting_down)
         self.save_as_action.setEnabled(enabled and self.save_dialog is None)
@@ -1085,6 +1099,32 @@ class MainWindow(QMainWindow):
         dialog.finished.connect(self._dialog_finished)
         self.file_dialog = dialog
         dialog.open()
+
+    def _choose_text_export(self) -> None:
+        session = self.manager.sessions.get(self.manager.active_id)
+        if session is None or self.text_export_dialog is not None or self.text_exports.busy:
+            return
+        document_id = session.document_id
+        path = str(Path(session.canonical_path).with_suffix(".text.json"))
+        dialog = QFileDialog(self, "Esporta testo strutturato", path, "JSON (*.json)")
+        dialog.setAcceptMode(QFileDialog.AcceptMode.AcceptSave)
+        dialog.setDefaultSuffix("json")
+        self.text_export_dialog = dialog
+
+        def accepted():
+            selected = dialog.selectedFiles()
+            if selected and self.text_exports.start(document_id, selected[0]):
+                self.statusBar().showMessage("Estrazione del testo in corso…")
+
+        def finished(_result):
+            self.text_export_dialog = None
+            dialog.deleteLater()
+            self._update_zoom_controls()
+
+        dialog.accepted.connect(accepted)
+        dialog.finished.connect(finished)
+        dialog.open()
+        self._update_zoom_controls()
 
     def _open_review(self, document_id: str | None) -> None:
         if document_id is None or self.reviews.closing or self.manager.shutting_down:
